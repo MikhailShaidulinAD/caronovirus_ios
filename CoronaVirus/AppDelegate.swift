@@ -20,17 +20,18 @@ var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupGoogleMaps()
 //        self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboardMain = UIStoryboard(name: "Main", bundle: nil)
-        let storyboardHome = UIStoryboard(name: "Home", bundle: nil)
-//        let navigation = UINavigationController()
-        let initialViewControllerHome = storyboardHome.instantiateViewController(withIdentifier: "HomeController") as! HomeController
-        let initialViewController = storyboardMain.instantiateViewController(withIdentifier: "ViewController") as! ViewController
-//        navigation.viewControllers.append(initialViewController)
-//        navigation.isNavigationBarHidden = true
-//        self.window?.rootViewController = navigation
-//        self.window?.makeKeyAndVisible()
-        let slideMenuController = SlideMenuController(mainViewController: initialViewController, leftMenuViewController: initialViewControllerHome)
-        self.window?.rootViewController = slideMenuController
+//        let storyboardMain = UIStoryboard(name: "Main", bundle: nil)
+//        let storyboardHome = UIStoryboard(name: "Home", bundle: nil)
+////        let navigation = UINavigationController()
+//        let initialViewControllerHome = storyboardHome.instantiateViewController(withIdentifier: "HomeController") as! HomeController
+//        let initialViewController = storyboardMain.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+////        navigation.viewControllers.append(initialViewController)
+////        navigation.isNavigationBarHidden = true
+////        self.window?.rootViewController = navigation
+////        self.window?.makeKeyAndVisible()
+//        let slideMenuController = SlideMenuController(mainViewController: initialViewController, leftMenuViewController: initialViewControllerHome)
+        let mainVC = NavigationBottomMenu()
+        self.window?.rootViewController = mainVC
         self.window?.makeKeyAndVisible()
 
         
