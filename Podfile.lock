@@ -1,0 +1,52 @@
+PODS:
+  - Alamofire (4.9.1)
+  - EasyDi (1.6.1)
+  - GoogleMaps (3.7.0):
+    - GoogleMaps/Maps (= 3.7.0)
+  - GoogleMaps/Base (3.7.0)
+  - GoogleMaps/Maps (3.7.0):
+    - GoogleMaps/Base
+  - RxCocoa (5.0.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.1)
+  - SDWebImage (5.4.1):
+    - SDWebImage/Core (= 5.4.1)
+  - SDWebImage/Core (5.4.1)
+  - SlideMenuControllerSwift (4.0.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - EasyDi
+  - GoogleMaps
+  - RxCocoa
+  - RxSwift
+  - SDWebImage
+  - SlideMenuControllerSwift
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - EasyDi
+    - GoogleMaps
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - SDWebImage
+    - SlideMenuControllerSwift
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  EasyDi: 3d7d4c0d3ad2d78b3ff22d4755590d32945f69cc
+  GoogleMaps: 55da829c68aa931f3ae982b9e341cc2f3d89c587
+  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
+  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
+  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+  SDWebImage: 29c340dbdcef342bb13125553f4e19ce056b07a7
+  SlideMenuControllerSwift: 021d6318201c53d4d4d3710517d43d6c556c7dd0
+
+PODFILE CHECKSUM: aef52073d412fc4da575e7f86a54ec6b68d64c08
+
+COCOAPODS: 1.9.0.beta.2
