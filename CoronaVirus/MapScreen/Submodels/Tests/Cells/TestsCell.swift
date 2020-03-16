@@ -44,6 +44,7 @@ class TestsCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
+        addDarkShadow()
         layer.cornerRadius = 10
     }
     

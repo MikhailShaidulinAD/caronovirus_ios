@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+class MainPresenter {
+    
+    let viewController:ViewController
+    required init(view:ViewController) {
+        self.viewController = view
+    }
+}

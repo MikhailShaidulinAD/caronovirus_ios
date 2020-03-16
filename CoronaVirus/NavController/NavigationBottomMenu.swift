@@ -18,7 +18,8 @@ class NavigationBottomMenu: UITabBarController {
     
     private func setupTabBar(){
         tabBar.barTintColor = UIColor(red: 250/255, green: 248/255, blue: 243/255, alpha: 1)
-        let mapController = UINavigationController(rootViewController: ViewController())
+         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        let mapController = UINavigationController(rootViewController: vc)
         mapController.tabBarItem.image = UIImage(named: "bar_map")
         mapController.tabBarItem.selectedImage = UIImage(named: "bar_map")?.imageWithColor(color1: UIColor(red: 52/255, green: 120/255, blue: 246/255, alpha: 1))
         mapController.tabBarItem.title = "Map"

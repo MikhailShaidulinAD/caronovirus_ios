@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+protocol MainInteractorProtocols {
+    func fetchCountriesInfo(request:MainViewDataFlow.CountriesInfoCase.Request)
+    func fetchTotalStatistic(request:MainViewDataFlow.CountriesTotalStatisticCase.Request)
+    func sendResultTest(request:MainViewDataFlow.TestCase.Request)
+}
+
+protocol MainPresenterProtocols {
+}
+
+protocol MainDataProviderProtocols {
+}

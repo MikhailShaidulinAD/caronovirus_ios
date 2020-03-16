@@ -9,13 +9,9 @@
 import UIKit
 import MapKit
 import GoogleMaps
-//import SlideMenuControllerSwift
 class ViewController: UIViewController {
     
     var mapView: GMSMapView?
-    
-   
-    
     let data = TesDataStore()
     
     lazy var collectionTest: UICollectionView = {
@@ -51,7 +47,7 @@ class ViewController: UIViewController {
            let view = UILabel()
            view.translatesAutoresizingMaskIntoConstraints = false
            view.text = "Test on existence of disease"
-           view.textColor = UIColor(red: 1, green: 0.647, blue: 0, alpha: 1)
+        view.textColor = .black
            view.textAlignment = .center
            view.font = UIFont(name: "sourcesanspro_bold", size: 16)
            return view
@@ -98,7 +94,15 @@ class ViewController: UIViewController {
         return view
     }()
     
+    var interactor:MainInteractor?
+    var router:MainRoute?
+    private var configurator = MainConfigurator()
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        configurator.configureModule(viewController: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,12 +174,17 @@ extension ViewController{
         self.recoveredValue.leftAnchor.constraint(equalTo: viewRecovered.leftAnchor, constant: 0).isActive = true
         self.recoveredValue.rightAnchor.constraint(equalTo: viewRecovered.rightAnchor, constant: 0).isActive = true
         
-        
         self.view.addSubview(titleTest)
         titleTest.topAnchor.constraint(equalTo: self.mapView!.bottomAnchor, constant: 22).isActive = true
         titleTest.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0).isActive = true
         titleTest.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16).isActive = true
         titleTest.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16).isActive = true
+        self.view.addSubview(collectionTest)
+        collectionTest.topAnchor.constraint(equalTo: self.titleTest.bottomAnchor, constant: 16).isActive = true
+        collectionTest.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+        collectionTest.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+        collectionTest.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -80).isActive = true
+        data.data = ["Did you recently lose consciousness?","Do you have a dry non-productive cough?", "Do you have an increased temperature (chill, fever)?","Do you feel difficulties by breathing?", "Do you feel pain in the breast area or in muscles? Headaches?", "Do you feel sickish?"]
     }
     
     private func setupNavBar(){

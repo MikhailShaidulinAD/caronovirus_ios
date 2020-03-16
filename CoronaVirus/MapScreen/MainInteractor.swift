@@ -7,3 +7,29 @@
 //
 
 import Foundation
+
+class MainInteractor {
+    let dataProvider:MainDataProvider
+    let presenter:MainPresenter
+    
+    required init(data:MainDataProvider, presenter:MainPresenter) {
+        self.dataProvider = data
+        self.presenter = presenter
+    }
+}
+
+extension MainInteractor: MainInteractorProtocols{
+    func fetchCountriesInfo(request: MainViewDataFlow.CountriesInfoCase.Request) {
+        <#code#>
+    }
+    
+    func fetchTotalStatistic(request: MainViewDataFlow.CountriesTotalStatisticCase.Request) {
+        <#code#>
+    }
+    
+    func sendResultTest(request: MainViewDataFlow.TestCase.Request) {
+        <#code#>
+    }
+    
+    
+}

@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+class MainDataProvider {
+    
+    let dataStore:MainStore
+    let apiService:MainService
+    
+    required init(store:MainStore, service:MainService) {
+        self.dataStore = store
+        self.apiService = service
+    }
+}
