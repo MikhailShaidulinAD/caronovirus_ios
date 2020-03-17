@@ -42,7 +42,7 @@ extension MainService: MainServiceProtocols{
     
     func requestTotalStatistic(completion: @escaping (TotalStatisticData?, String?) -> Void) {
         let url = "globals"
-        self.sendRequest(requestType: .post, url: host + url, params: nil, paramsEncoding: JSONEncoding.default) { (data, connect, err) in
+        self.sendRequest(requestType: .get, url: host + url, params: nil, paramsEncoding: JSONEncoding.default) { (data, connect, err) in
             if !connect{
                 completion(nil, "Not networking")
             }

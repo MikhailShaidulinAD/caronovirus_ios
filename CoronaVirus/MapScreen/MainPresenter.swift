@@ -10,8 +10,30 @@ import Foundation
 
 class MainPresenter {
     
-    let viewController:ViewController
+    private let viewController:ViewController
     required init(view:ViewController) {
         self.viewController = view
     }
+}
+
+extension MainPresenter: MainPresenterProtocols{
+    func presentCountriesInfo(response: MainViewDataFlow.CountriesInfoCase.Response) {
+    }
+    
+    func presentTotalStatistic(response: MainViewDataFlow.CountriesTotalStatisticCase.Response) {
+        let viewState: MainViewDataFlow.CountriesTotalStatisticCase.ViewControllerState
+        switch response.response {
+        case .success(let data):
+            viewState = .success(infected: String(data.globals.cases), deceased: String(data.globals.deaths), recovered: String(data.globals.recovered))
+            
+        case .failure(let err):
+            viewState = .failure(err: err)
+        }
+        self.viewController.showFullStatistic(viewState: MainViewDataFlow.CountriesTotalStatisticCase.ViewModel(result: viewState))
+    }
+    
+    func presentResultTest(response: MainViewDataFlow.TestCase.Response) {
+    }
+    
+    
 }

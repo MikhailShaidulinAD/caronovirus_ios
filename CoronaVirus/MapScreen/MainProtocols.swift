@@ -15,7 +15,23 @@ protocol MainInteractorProtocols {
 }
 
 protocol MainPresenterProtocols {
+    func presentCountriesInfo(response:MainViewDataFlow.CountriesInfoCase.Response)
+    func presentTotalStatistic(response: MainViewDataFlow.CountriesTotalStatisticCase.Response)
+    func presentResultTest(response: MainViewDataFlow.TestCase.Response)
 }
 
 protocol MainDataProviderProtocols {
+    // API
+    func sendRequestTestResult(deviceID:String, positiveCount:Int, completion: @escaping(TestResponseData?, String?)->Void)
+    func sendRequestStatistic(completion: @escaping (TotalStatisticData?, String?)->Void)
+    func sendRequestCountries(completion: @escaping (CountriesData?, String?)->Void)
+    
+    //GETTER
+    func getDeviceID()->String
+}
+
+protocol MainViewControllerProtocols {
+    func showCountiesInfo(viewState:MainViewDataFlow.CountriesInfoCase.ViewModel)
+    func showTestResult(viewState:MainViewDataFlow.TestCase.ViewModel)
+    func showFullStatistic(viewState:MainViewDataFlow.CountriesTotalStatisticCase.ViewModel)
 }

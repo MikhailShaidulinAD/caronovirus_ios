@@ -36,6 +36,13 @@ class ViewController: UIViewController {
         return view
     }()
     
+    let viewDeceased:UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 171/255, green: 171/255, blue: 171/255, alpha: 0.8)
+        return view
+    }()
+    
     let viewRecovered:UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +80,16 @@ class ViewController: UIViewController {
         view.font = UIFont(name: "sourcesanspro_bold", size: 16)
         return view
     }()
+    let deceasedValue:UILabel = {
+        let view = UILabel()
+        view.text = "0"
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textAlignment = .center
+        view.textColor = .white
+        view.backgroundColor = .clear
+        view.font = UIFont(name: "sourcesanspro_bold", size: 16)
+        return view
+    }()
     let infectedTitle:UILabel = {
         let view = UILabel()
         view.text = "Infected"
@@ -86,6 +103,16 @@ class ViewController: UIViewController {
     let recoveredTitle:UILabel = {
         let view = UILabel()
         view.text = "Recovered"
+        view.textAlignment = .center
+        view.textColor = .white
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.font = UIFont(name: "sourcesanspro_bold", size: 16)
+        return view
+    }()
+    let deceasedTitle:UILabel = {
+        let view = UILabel()
+        view.text = "Deceased"
         view.textAlignment = .center
         view.textColor = .white
         view.backgroundColor = .clear
@@ -108,7 +135,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.mapView = GMSMapView()
         self.view.backgroundColor = .white
-        setupNavBar()
+        setupViews()
+        createFetchTotalStatistic()
+//        setupNavBar()
     }
     
     
@@ -119,7 +148,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
-        setupViews()
+
     }
     
     
@@ -148,8 +177,14 @@ extension ViewController{
         self.viewInfected.heightAnchor.constraint(equalToConstant: 56).isActive = true
         self.viewInfected.widthAnchor.constraint(equalToConstant: 110).isActive = true
         
+        self.view.addSubview(viewDeceased)
+        self.viewDeceased.topAnchor.constraint(equalTo: viewInfected.bottomAnchor, constant: 16).isActive = true
+        self.viewDeceased.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+        self.viewDeceased.heightAnchor.constraint(equalToConstant: 56).isActive = true
+        self.viewDeceased.widthAnchor.constraint(equalToConstant: 110).isActive = true
+        
         self.view.addSubview(viewRecovered)
-        self.viewRecovered.topAnchor.constraint(equalTo: viewInfected.bottomAnchor, constant: 16).isActive = true
+        self.viewRecovered.topAnchor.constraint(equalTo: viewDeceased.bottomAnchor, constant: 16).isActive = true
         self.viewRecovered.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         self.viewRecovered.heightAnchor.constraint(equalToConstant: 56).isActive = true
         self.viewRecovered.widthAnchor.constraint(equalToConstant: 110).isActive = true
@@ -168,6 +203,16 @@ extension ViewController{
         self.recoveredTitle.topAnchor.constraint(equalTo: viewRecovered.topAnchor, constant: 8).isActive = true
         self.recoveredTitle.leftAnchor.constraint(equalTo: viewRecovered.leftAnchor, constant: 0).isActive = true
         self.recoveredTitle.rightAnchor.constraint(equalTo: viewRecovered.rightAnchor, constant: 0).isActive = true
+        
+        self.viewDeceased.addSubview(deceasedTitle)
+        self.deceasedTitle.topAnchor.constraint(equalTo: viewDeceased.topAnchor, constant: 8).isActive = true
+        self.deceasedTitle.leftAnchor.constraint(equalTo: viewDeceased.leftAnchor, constant: 0).isActive = true
+        self.deceasedTitle.rightAnchor.constraint(equalTo: viewDeceased.rightAnchor, constant: 0).isActive = true
+        
+        self.viewDeceased.addSubview(deceasedValue)
+        self.deceasedValue.topAnchor.constraint(equalTo: deceasedTitle.bottomAnchor, constant: 4).isActive = true
+        self.deceasedValue.leftAnchor.constraint(equalTo: viewDeceased.leftAnchor, constant: 0).isActive = true
+        self.deceasedValue.rightAnchor.constraint(equalTo: viewDeceased.rightAnchor, constant: 0).isActive = true
         
         self.viewRecovered.addSubview(recoveredValue)
         self.recoveredValue.topAnchor.constraint(equalTo: recoveredTitle.bottomAnchor, constant: 4).isActive = true
@@ -196,6 +241,48 @@ extension ViewController{
         navigationController?.title = "Title"
         self.addLeftBarButtonWithImage(UIImage(named: "burger")!)
     }
+}
+
+extension ViewController{
+    
+    private func createFetchTotalStatistic(){
+        let request = MainViewDataFlow.CountriesTotalStatisticCase.Request()
+        interactor?.fetchTotalStatistic(request: request)
+    }
+    
+}
+
+extension ViewController: MainViewControllerProtocols{
+    func showCountiesInfo(viewState: MainViewDataFlow.CountriesInfoCase.ViewModel) {
+        switch viewState.result {
+        case .success(countriesItems: let items):
+            items.forEach{[unowned self](item) in
+            let iMarker = GMSMarker()
+//                iMarker.position = CLLocationCoordinate2DMake(item![0], item.coordinates![1])
+                iMarker.map = self.mapView
+            }
+        case .failure(let err):break
+        }
+    }
+    
+    func showTestResult(viewState: MainViewDataFlow.TestCase.ViewModel) {
+        switch viewState.result {
+        case .success(let isSick):break
+        case .failure(err: let err):break
+        }
+    }
+    
+    func showFullStatistic(viewState: MainViewDataFlow.CountriesTotalStatisticCase.ViewModel) {
+        switch viewState.result {
+        case .success(infected: let infect, deceased: let deces, recovered: let recov):
+            self.infectedValue.text = infect
+            self.deceasedValue.text = deces
+            self.recoveredValue.text = recov
+        case .failure(err: let err):break
+        }
+    }
+    
+    
 }
 
 
