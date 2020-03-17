@@ -21,6 +21,7 @@
 		2D65A963241ADB1900893B1F /* TestDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65A962241ADB1900893B1F /* TestDataStore.swift */; };
 		2D7C46802420BEB200300344 /* MarkAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7C467E2420BEB200300344 /* MarkAnnotationView.swift */; };
 		2D7C46832420CA1F00300344 /* MarkAnnotationXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D7C46822420CA1F00300344 /* MarkAnnotationXib.xib */; };
+		2D7C46862420F70E00300344 /* PopUpResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7C46852420F70E00300344 /* PopUpResult.swift */; };
 		2D863B9F241C341E00A21F11 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D863B9E241C341E00A21F11 /* ViewExtension.swift */; };
 		2D9301D0242027A20098353A /* MainRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9301CF242027A20098353A /* MainRoute.swift */; };
 		2D9301D2242027B00098353A /* MainConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9301D1242027B00098353A /* MainConfigurator.swift */; };
@@ -86,6 +87,7 @@
 		2D65A962241ADB1900893B1F /* TestDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataStore.swift; sourceTree = "<group>"; };
 		2D7C467E2420BEB200300344 /* MarkAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkAnnotationView.swift; sourceTree = "<group>"; };
 		2D7C46822420CA1F00300344 /* MarkAnnotationXib.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MarkAnnotationXib.xib; sourceTree = "<group>"; };
+		2D7C46852420F70E00300344 /* PopUpResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpResult.swift; sourceTree = "<group>"; };
 		2D863B9E241C341E00A21F11 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		2D9301CF242027A20098353A /* MainRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRoute.swift; sourceTree = "<group>"; };
 		2D9301D1242027B00098353A /* MainConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConfigurator.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 		2D65A95D241AD96A00893B1F /* Submodels */ = {
 			isa = PBXGroup;
 			children = (
+				2D7C46842420F6E100300344 /* PopUpResultTest */,
 				2D7C46752420BD1F00300344 /* Marker */,
 				2D65A95F241AD98C00893B1F /* Tests */,
 			);
@@ -260,6 +263,14 @@
 				2D7C467E2420BEB200300344 /* MarkAnnotationView.swift */,
 			);
 			path = Marker;
+			sourceTree = "<group>";
+		};
+		2D7C46842420F6E100300344 /* PopUpResultTest */ = {
+			isa = PBXGroup;
+			children = (
+				2D7C46852420F70E00300344 /* PopUpResult.swift */,
+			);
+			path = PopUpResultTest;
 			sourceTree = "<group>";
 		};
 		2D863B9C241C33EF00A21F11 /* MainModule */ = {
@@ -613,6 +624,7 @@
 				2D863B9F241C341E00A21F11 /* ViewExtension.swift in Sources */,
 				2D9301D2242027B00098353A /* MainConfigurator.swift in Sources */,
 				2DD10BB1241AE07E0037B3E9 /* MainPresenter.swift in Sources */,
+				2D7C46862420F70E00300344 /* PopUpResult.swift in Sources */,
 				2D9F46B6242003AA00499AAC /* NewsViewController.swift in Sources */,
 				2DD10BBB241AE1430037B3E9 /* MainService.swift in Sources */,
 				2DD10BB7241AE0F20037B3E9 /* MainProtocols.swift in Sources */,

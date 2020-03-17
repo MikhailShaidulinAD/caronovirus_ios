@@ -42,6 +42,14 @@ extension MainPresenter: MainPresenterProtocols{
     }
     
     func presentResultTest(response: MainViewDataFlow.TestCase.Response) {
+        let viewState: MainViewDataFlow.TestCase.ViewControllerState
+        switch response.response {
+        case .success(let data):
+            viewState = .success(data.sick)
+        case .failure(let err):
+            viewState = .failure(err: err)
+        }
+        self.viewController.showTestResult(viewState: MainViewDataFlow.TestCase.ViewModel(result: viewState))
     }
     
     

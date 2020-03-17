@@ -231,6 +231,7 @@ extension ViewController{
         collectionTest.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         collectionTest.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -80).isActive = true
         data.data = ["Did you recently lose consciousness?","Do you have a dry non-productive cough?", "Do you have an increased temperature (chill, fever)?","Do you feel difficulties by breathing?", "Do you feel pain in the breast area or in muscles? Headaches?", "Do you feel sickish?"]
+        data.delegate = self
     }
     
     private func setupNavBar(){
@@ -254,6 +255,12 @@ extension ViewController{
     private func createFetchCountiesInfo(){
         let request = MainViewDataFlow.CountriesInfoCase.Request()
         interactor?.fetchCountriesInfo(request: request)
+    }
+    
+    private func createSendTestResult(count:Int){
+        let request:MainViewDataFlow.TestCase.RequestBody
+        request = .positiveCount(count)
+        interactor?.sendResultTest(request: MainViewDataFlow.TestCase.Request(request: request))
     }
     
 }
@@ -292,6 +299,20 @@ extension ViewController: MainViewControllerProtocols{
             self.recoveredValue.text = recov
         case .failure(err: let err):break
         }
+    }
+    
+    
+}
+
+extension ViewController: TestDataStoreProtocols{
+    func requestResultTest(positive: Int) {
+        createSendTestResult(count: positive)
+        collectionTest.scrollRectToVisible(CGRect(x: 0, y: 0, width: 0, height: 0), animated: true)
+    }
+    
+    func scrollToNext(index:IndexPath) {
+            collectionTest.isScrollEnabled = true
+            collectionTest.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
     }
     
     
