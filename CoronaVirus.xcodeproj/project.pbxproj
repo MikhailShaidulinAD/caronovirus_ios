@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D40C6FF2421541C00EFBB57 /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D40C6FE2421541C00EFBB57 /* UIFontExtension.swift */; };
+		2D40C7052421542A00EFBB57 /* EuclidFlex-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D40C7002421542900EFBB57 /* EuclidFlex-Light.ttf */; };
+		2D40C7062421542A00EFBB57 /* EuclidFlex-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D40C7012421542900EFBB57 /* EuclidFlex-Medium.ttf */; };
+		2D40C7072421542A00EFBB57 /* EuclidFlex-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D40C7022421542A00EFBB57 /* EuclidFlex-SemiBold.ttf */; };
+		2D40C7082421542A00EFBB57 /* EuclidFlex-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D40C7032421542A00EFBB57 /* EuclidFlex-Regular.ttf */; };
+		2D40C7092421542A00EFBB57 /* EuclidFlex-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D40C7042421542A00EFBB57 /* EuclidFlex-Bold.ttf */; };
+		2D40C70C24216C7D00EFBB57 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D40C70B24216C7D00EFBB57 /* LocationManager.swift */; };
+		2D40C70E242171F100EFBB57 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D40C70D242171F100EFBB57 /* UserData.swift */; };
 		2D40E319241AA4A40028E716 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D40E318241AA4A40028E716 /* AppDelegate.swift */; };
 		2D40E31D241AA4A40028E716 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D40E31C241AA4A40028E716 /* ViewController.swift */; };
 		2D40E320241AA4A40028E716 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D40E31E241AA4A40028E716 /* Main.storyboard */; };
@@ -67,6 +75,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D40C6FD2421537700EFBB57 /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Bold.ttf"; sourceTree = "<group>"; };
+		2D40C6FE2421541C00EFBB57 /* UIFontExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
+		2D40C7002421542900EFBB57 /* EuclidFlex-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuclidFlex-Light.ttf"; sourceTree = "<group>"; };
+		2D40C7012421542900EFBB57 /* EuclidFlex-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuclidFlex-Medium.ttf"; sourceTree = "<group>"; };
+		2D40C7022421542A00EFBB57 /* EuclidFlex-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuclidFlex-SemiBold.ttf"; sourceTree = "<group>"; };
+		2D40C7032421542A00EFBB57 /* EuclidFlex-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuclidFlex-Regular.ttf"; sourceTree = "<group>"; };
+		2D40C7042421542A00EFBB57 /* EuclidFlex-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuclidFlex-Bold.ttf"; sourceTree = "<group>"; };
+		2D40C70B24216C7D00EFBB57 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		2D40C70D242171F100EFBB57 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		2D40E315241AA4A40028E716 /* CoronaVirus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoronaVirus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D40E318241AA4A40028E716 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2D40E31C241AA4A40028E716 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +160,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D40C70A24216C4A00EFBB57 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2D40C70B24216C7D00EFBB57 /* LocationManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		2D40E30C241AA4A40028E716 = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +230,13 @@
 		2D65A952241ACD3500893B1F /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				2D40C7042421542A00EFBB57 /* EuclidFlex-Bold.ttf */,
+				2D40C7002421542900EFBB57 /* EuclidFlex-Light.ttf */,
+				2D40C7012421542900EFBB57 /* EuclidFlex-Medium.ttf */,
+				2D40C7032421542A00EFBB57 /* EuclidFlex-Regular.ttf */,
+				2D40C7022421542A00EFBB57 /* EuclidFlex-SemiBold.ttf */,
+				2D40C6FE2421541C00EFBB57 /* UIFontExtension.swift */,
+				2D40C6FD2421537700EFBB57 /* SourceSansPro-Bold.ttf */,
 				2D65A955241ACD5800893B1F /* sourcesanspro_bold.ttf */,
 				2D65A953241ACD5700893B1F /* sourcesanspro_regular.ttf */,
 				2D65A954241ACD5700893B1F /* sourcesanspro_semibold.ttf */,
@@ -225,6 +257,7 @@
 				2D9301DD242032FC0098353A /* CountriesData.swift */,
 				2D9301DF242035E80098353A /* TotalStatisticData.swift */,
 				2D9301E1242037600098353A /* TestResponseData.swift */,
+				2D40C70D242171F100EFBB57 /* UserData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -276,6 +309,7 @@
 		2D863B9C241C33EF00A21F11 /* MainModule */ = {
 			isa = PBXGroup;
 			children = (
+				2D40C70A24216C4A00EFBB57 /* Models */,
 				2D9301DA2420293D0098353A /* BaseServices */,
 				2D9301D32420285C0098353A /* DataServices */,
 				2D863B9D241C33FA00A21F11 /* Extension */,
@@ -529,14 +563,19 @@
 			files = (
 				2D40E325241AA4A60028E716 /* LaunchScreen.storyboard in Resources */,
 				2D9F46B8242003BA00499AAC /* NewsView.storyboard in Resources */,
+				2D40C7082421542A00EFBB57 /* EuclidFlex-Regular.ttf in Resources */,
 				2D7C46832420CA1F00300344 /* MarkAnnotationXib.xib in Resources */,
 				2D40E322241AA4A60028E716 /* Assets.xcassets in Resources */,
 				2D65A958241ACD5800893B1F /* sourcesanspro_bold.ttf in Resources */,
 				2D9F46BD2420041E00499AAC /* ProfileView.storyboard in Resources */,
 				2D40E320241AA4A40028E716 /* Main.storyboard in Resources */,
 				2D65A956241ACD5800893B1F /* sourcesanspro_regular.ttf in Resources */,
+				2D40C7062421542A00EFBB57 /* EuclidFlex-Medium.ttf in Resources */,
+				2D40C7072421542A00EFBB57 /* EuclidFlex-SemiBold.ttf in Resources */,
 				2D9F46C22420045000499AAC /* FaqView.storyboard in Resources */,
+				2D40C7092421542A00EFBB57 /* EuclidFlex-Bold.ttf in Resources */,
 				2D65A957241ACD5800893B1F /* sourcesanspro_semibold.ttf in Resources */,
+				2D40C7052421542A00EFBB57 /* EuclidFlex-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,16 +648,19 @@
 				2D65A963241ADB1900893B1F /* TestDataStore.swift in Sources */,
 				2D9301D52420288A0098353A /* AppDataStories.swift in Sources */,
 				2D9301D0242027A20098353A /* MainRoute.swift in Sources */,
+				2D40C70C24216C7D00EFBB57 /* LocationManager.swift in Sources */,
 				2DD10BB3241AE09C0037B3E9 /* MainDataProvider.swift in Sources */,
 				2D9301DC2420294D0098353A /* APIService.swift in Sources */,
 				2D9F46BB2420040F00499AAC /* ProfileViewController.swift in Sources */,
 				2DD10BBD241AE1500037B3E9 /* MainStore.swift in Sources */,
+				2D40C6FF2421541C00EFBB57 /* UIFontExtension.swift in Sources */,
 				2D7C46802420BEB200300344 /* MarkAnnotationView.swift in Sources */,
 				2D9301D7242028DB0098353A /* UserDefaultService.swift in Sources */,
 				2D9301E2242037600098353A /* TestResponseData.swift in Sources */,
 				2D9301D92420290F0098353A /* DIAssembly.swift in Sources */,
 				2DD10BB5241AE0D60037B3E9 /* MainDataFlow.swift in Sources */,
 				2D9F46C02420044200499AAC /* FaqViewController.swift in Sources */,
+				2D40C70E242171F100EFBB57 /* UserData.swift in Sources */,
 				2D9301DE242032FC0098353A /* CountriesData.swift in Sources */,
 				2D40E319241AA4A40028E716 /* AppDelegate.swift in Sources */,
 				2D863B9F241C341E00A21F11 /* ViewExtension.swift in Sources */,

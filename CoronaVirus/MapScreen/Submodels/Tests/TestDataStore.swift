@@ -54,6 +54,7 @@ extension TesDataStore: TestCellProtocols{
             self.delegate?.scrollToNext(index: IndexPath(row: index.row + 1, section: index.section))
         }else{
             self.delegate?.requestResultTest(positive: countPositiveAnswers)
+            countPositiveAnswers = 0
         }
         
     }

@@ -18,6 +18,16 @@ class MainPresenter {
 }
 
 extension MainPresenter: MainPresenterProtocols{
+    func presentUserInfo(response: MainViewDataFlow.CreateUserCase.Response) {
+        let viewState:MainViewDataFlow.CreateUserCase.ViewControllerState
+        switch response.response {
+        case .success:
+            viewState = .success
+        case .failure(let err):
+            viewState = .failure(err: err)
+        }
+    }
+    
     func presentCountriesInfo(response: MainViewDataFlow.CountriesInfoCase.Response) {
         let viewState: MainViewDataFlow.CountriesInfoCase.ViewControllerState
         switch response.response {

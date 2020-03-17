@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import GoogleMaps
+import CoreLocation
 class ViewController: UIViewController {
     
     var mapView: GMSMapView?
@@ -121,6 +122,20 @@ class ViewController: UIViewController {
         return view
     }()
     
+    lazy var popUpResult: PopUpResult = {
+        let view = PopUpResult(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 64, height: self.view.frame.width * 0.2))
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let visualEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let view = UIVisualEffectView(effect: blurEffect)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     var interactor:MainInteractor?
     var router:MainRoute?
     private var configurator = MainConfigurator()
@@ -138,27 +153,19 @@ class ViewController: UIViewController {
         setupViews()
         createFetchTotalStatistic()
         createFetchCountiesInfo()
-//        setupNavBar()
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     
-    override var preferredStatusBarStyle: UIStatusBarStyle{
-        return .lightContent
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-
-    }
-    
-    
-
 }
 
 extension ViewController{
     @objc func clickMenu(){
         print("click")
+    }
+    
+    @objc func closePopUp(){
+        hidePopUpResult()
     }
 }
 
@@ -173,7 +180,7 @@ extension ViewController{
         mapView!.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         mapView!.heightAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
         self.view.addSubview(viewInfected)
-        self.viewInfected.topAnchor.constraint(equalTo: mapView!.topAnchor, constant: 16).isActive = true
+        self.viewInfected.topAnchor.constraint(equalTo: mapView!.topAnchor, constant: 50).isActive = true
         self.viewInfected.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         self.viewInfected.heightAnchor.constraint(equalToConstant: 56).isActive = true
         self.viewInfected.widthAnchor.constraint(equalToConstant: 110).isActive = true
@@ -232,6 +239,23 @@ extension ViewController{
         collectionTest.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -80).isActive = true
         data.data = ["Did you recently lose consciousness?","Do you have a dry non-productive cough?", "Do you have an increased temperature (chill, fever)?","Do you feel difficulties by breathing?", "Do you feel pain in the breast area or in muscles? Headaches?", "Do you feel sickish?"]
         data.delegate = self
+        
+        self.view.addSubview(visualEffectView)
+        visualEffectView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+        visualEffectView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+        visualEffectView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        visualEffectView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        visualEffectView.alpha = 0
+        visualEffectView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closePopUp)))
+        self.view.addSubview(popUpResult)
+        popUpResult.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        popUpResult.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        popUpResult.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 32).isActive = true
+        popUpResult.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -32).isActive = true
+        popUpResult.heightAnchor.constraint(equalToConstant: self.view.frame.width * 0.4).isActive = true
+        popUpResult.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        popUpResult.alpha = 0
+        popUpResult.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closePopUp)))
     }
     
     private func setupNavBar(){
@@ -242,6 +266,59 @@ extension ViewController{
         navigationController?.navigationBar.tintColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
         navigationController?.title = "Title"
         self.addLeftBarButtonWithImage(UIImage(named: "burger")!)
+    }
+    
+    private func showAccessLocationAlert(text: String){
+        let settingsAppURL = URL(string: UIApplication.openSettingsURLString)!
+        let alert = UIAlertController(title: "Location", message: text, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(alert)in
+            print("cancel")
+        }))
+        alert.addAction(UIAlertAction(title: "Enable",
+                                      style: .default,
+                                      handler: { (alert) -> Void in
+                                        UIApplication.shared.open(settingsAppURL,
+                                                                  options: [:],
+                                                                  completionHandler: nil)
+        }))
+        self.navigationController?.present(alert, animated: false, completion: nil)
+    }
+    
+    private func checkAccessLocation(){
+                switch CLLocationManager.authorizationStatus() {
+                case .authorizedAlways:
+                    createRequestUserInfo()
+                case .authorizedWhenInUse:
+                    createRequestUserInfo()
+                case .denied:
+                    showAccessLocationAlert(text: "Unable to retrieve your location data because geolocation is disabled")
+                case .notDetermined: createRequestUserInfo()
+                case .restricted:
+                    showAccessLocationAlert(text: "Unable to retrieve your location data because geolocation is disabled")
+                @unknown default:
+                    return
+                }
+    }
+    
+    private func showPopUpResult(isSick:Bool) {
+        visualEffectView.isUserInteractionEnabled = true
+        popUpResult.isUserInteractionEnabled = true
+        popUpResult.setupViews(isResultPositive: isSick)
+        UIView.animate(withDuration: 0.5){
+            self.visualEffectView.alpha = 1
+            self.popUpResult.alpha = 1
+            self.popUpResult.transform = CGAffineTransform.identity
+        }
+    }
+    
+    private func hidePopUpResult(){
+        visualEffectView.isUserInteractionEnabled = false
+        popUpResult.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3){
+            self.visualEffectView.alpha = 0
+            self.popUpResult.alpha = 0
+            self.popUpResult.transform = CGAffineTransform.identity
+        }
     }
 }
 
@@ -263,6 +340,11 @@ extension ViewController{
         interactor?.sendResultTest(request: MainViewDataFlow.TestCase.Request(request: request))
     }
     
+    private func createRequestUserInfo(){
+        let request = MainViewDataFlow.CreateUserCase.Request()
+        interactor?.sendRequestUser(request: request)
+    }
+    
 }
 
 extension ViewController: MainViewControllerProtocols{
@@ -279,6 +361,7 @@ extension ViewController: MainViewControllerProtocols{
                     iMarker.map = self.mapView
                 }
             }
+            checkAccessLocation()
             self.loadViewIfNeeded()
         case .failure(let err):break
         }
@@ -286,7 +369,8 @@ extension ViewController: MainViewControllerProtocols{
     
     func showTestResult(viewState: MainViewDataFlow.TestCase.ViewModel) {
         switch viewState.result {
-        case .success(let isSick):break
+        case .success(let isSick):
+            showPopUpResult(isSick: isSick)
         case .failure(err: let err):break
         }
     }
@@ -307,7 +391,7 @@ extension ViewController: MainViewControllerProtocols{
 extension ViewController: TestDataStoreProtocols{
     func requestResultTest(positive: Int) {
         createSendTestResult(count: positive)
-        collectionTest.scrollRectToVisible(CGRect(x: 0, y: 0, width: 0, height: 0), animated: true)
+        collectionTest.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
     }
     
     func scrollToNext(index:IndexPath) {

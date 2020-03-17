@@ -83,6 +83,54 @@ enum MainViewDataFlow{
                 case failure(err:String)
             }
     }
+    
+    //MARK: - Create User
+    enum CreateUserCase {
+        struct Request {}
+        
+        struct Response {
+            var response: MainViewDataFlow.CreateUserCase.RequestResult
+        }
+        
+        struct ViewModel {
+            var viewState: MainViewDataFlow.CreateUserCase.ViewControllerState
+        }
+        
+        enum RequestResult {
+            case success
+            case failure(String)
+        }
+        enum ViewControllerState {
+            case success
+            case failure(err:String)
+        }
+    }
+    
+    //MARK: - CheckLocationAccessCase
+    enum CheckLocationAccessCase{
+        struct Request {
+            var isAccess: Bool?
+            var status: Int32?
+        }
+        
+        struct Response {
+            var result: MainViewDataFlow.CheckLocationAccessCase.RequestResult
+        }
+        
+        struct ViewModel {
+            var state: MainViewDataFlow.CheckLocationAccessCase.ViewControllerState
+        }
+        
+        enum ViewControllerState {
+            case result
+            case needLocation
+        }
+        
+        enum RequestResult {
+            case success
+            case failure
+        }
+    }
 }
 
 
