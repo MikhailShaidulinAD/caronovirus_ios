@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 protocol MainServiceProtocols {
-    func requestCountries(complemention: @escaping(CountriesData?, String?)->Void )
+    func requestCountries(complemention: @escaping(CountryInfo?, String?)->Void )
     func requestTotalStatistic(completion: @escaping(TotalStatisticData?, String?)->Void)
     func requestResultTest(deviceID:String, positiveCount:Int, completion: @escaping (TestResponseData?, String?)->Void)
 }
@@ -60,7 +60,7 @@ extension MainService: MainServiceProtocols{
         }
     }
     
-    func requestCountries(complemention: @escaping (CountriesData?, String?) -> Void) {
+    func requestCountries(complemention: @escaping (CountryInfo?, String?) -> Void) {
         let url = "countries"
         self.sendRequest(requestType: .get, url: host + url, params: nil, paramsEncoding: JSONEncoding.default) { (data, connect, err) in
             if !connect{
@@ -68,7 +68,7 @@ extension MainService: MainServiceProtocols{
             }
             
             if data != nil{
-                let dataCountries = try? JSONDecoder().decode(CountriesData.self, from: data!)
+                let dataCountries = try? JSONDecoder().decode(CountryInfo.self, from: data!)
                 if dataCountries != nil{
                     complemention(dataCountries, nil)
                 } else{

@@ -19,6 +19,8 @@
 		2D65A958241ACD5800893B1F /* sourcesanspro_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D65A955241ACD5800893B1F /* sourcesanspro_bold.ttf */; };
 		2D65A961241AD9A900893B1F /* TestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65A960241AD9A900893B1F /* TestsCell.swift */; };
 		2D65A963241ADB1900893B1F /* TestDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65A962241ADB1900893B1F /* TestDataStore.swift */; };
+		2D7C46802420BEB200300344 /* MarkAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7C467E2420BEB200300344 /* MarkAnnotationView.swift */; };
+		2D7C46832420CA1F00300344 /* MarkAnnotationXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D7C46822420CA1F00300344 /* MarkAnnotationXib.xib */; };
 		2D863B9F241C341E00A21F11 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D863B9E241C341E00A21F11 /* ViewExtension.swift */; };
 		2D9301D0242027A20098353A /* MainRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9301CF242027A20098353A /* MainRoute.swift */; };
 		2D9301D2242027B00098353A /* MainConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9301D1242027B00098353A /* MainConfigurator.swift */; };
@@ -82,6 +84,8 @@
 		2D65A955241ACD5800893B1F /* sourcesanspro_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sourcesanspro_bold.ttf; sourceTree = "<group>"; };
 		2D65A960241AD9A900893B1F /* TestsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsCell.swift; sourceTree = "<group>"; };
 		2D65A962241ADB1900893B1F /* TestDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataStore.swift; sourceTree = "<group>"; };
+		2D7C467E2420BEB200300344 /* MarkAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkAnnotationView.swift; sourceTree = "<group>"; };
+		2D7C46822420CA1F00300344 /* MarkAnnotationXib.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MarkAnnotationXib.xib; sourceTree = "<group>"; };
 		2D863B9E241C341E00A21F11 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		2D9301CF242027A20098353A /* MainRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRoute.swift; sourceTree = "<group>"; };
 		2D9301D1242027B00098353A /* MainConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConfigurator.swift; sourceTree = "<group>"; };
@@ -226,6 +230,7 @@
 		2D65A95D241AD96A00893B1F /* Submodels */ = {
 			isa = PBXGroup;
 			children = (
+				2D7C46752420BD1F00300344 /* Marker */,
 				2D65A95F241AD98C00893B1F /* Tests */,
 			);
 			path = Submodels;
@@ -246,6 +251,15 @@
 				2D65A962241ADB1900893B1F /* TestDataStore.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		2D7C46752420BD1F00300344 /* Marker */ = {
+			isa = PBXGroup;
+			children = (
+				2D7C46822420CA1F00300344 /* MarkAnnotationXib.xib */,
+				2D7C467E2420BEB200300344 /* MarkAnnotationView.swift */,
+			);
+			path = Marker;
 			sourceTree = "<group>";
 		};
 		2D863B9C241C33EF00A21F11 /* MainModule */ = {
@@ -504,6 +518,7 @@
 			files = (
 				2D40E325241AA4A60028E716 /* LaunchScreen.storyboard in Resources */,
 				2D9F46B8242003BA00499AAC /* NewsView.storyboard in Resources */,
+				2D7C46832420CA1F00300344 /* MarkAnnotationXib.xib in Resources */,
 				2D40E322241AA4A60028E716 /* Assets.xcassets in Resources */,
 				2D65A958241ACD5800893B1F /* sourcesanspro_bold.ttf in Resources */,
 				2D9F46BD2420041E00499AAC /* ProfileView.storyboard in Resources */,
@@ -587,6 +602,7 @@
 				2D9301DC2420294D0098353A /* APIService.swift in Sources */,
 				2D9F46BB2420040F00499AAC /* ProfileViewController.swift in Sources */,
 				2DD10BBD241AE1500037B3E9 /* MainStore.swift in Sources */,
+				2D7C46802420BEB200300344 /* MarkAnnotationView.swift in Sources */,
 				2D9301D7242028DB0098353A /* UserDefaultService.swift in Sources */,
 				2D9301E2242037600098353A /* TestResponseData.swift in Sources */,
 				2D9301D92420290F0098353A /* DIAssembly.swift in Sources */,

@@ -16,10 +16,39 @@ class MainInteractor {
         self.dataProvider = data
         self.presenter = presenter
     }
+    
+    private func getMiddleCoordinates(north:String, west:String, south:String, east:String)->[Double]?{
+        guard let northDouble = Double(north),
+            let southDouble = Double(south),
+            let westDouble = Double(west),
+            let eastDouble = Double(east) else{
+            return nil
+        }
+        let lat = (northDouble + southDouble) / 2.0
+        let lon = (westDouble + eastDouble) / 2.0
+        return [lat, lon]
+        
+    }
 }
 
 extension MainInteractor: MainInteractorProtocols{
+    
     func fetchCountriesInfo(request: MainViewDataFlow.CountriesInfoCase.Request) {
+        dataProvider.sendRequestCountries { (data, err) in
+            let response:MainViewDataFlow.CountriesInfoCase.RequestResult
+            if data != nil {
+            var countiParse: CountryInfo = CountryInfo()
+                data!.forEach{[unowned self](item) in
+                    let coordinates = self.getMiddleCoordinates(north: item.north, west: item.west, south: item.south, east: item.east)
+                countiParse.append(CountriesData(id: item.id, countryCode: item.countryCode, name: item.name, population: item.population, north: item.north, south: item.south, east: item.east, west: item.west, cases: item.cases, deaths: item.deaths, recovered: item.recovered, lat: coordinates?.first ?? nil, lon: coordinates?.last ?? nil))
+                }
+                response = .success(countiParse)
+                self.presenter.presentCountriesInfo(response: MainViewDataFlow.CountriesInfoCase.Response(response: response))
+            }else{
+                response = .failure(err ?? "Error Response")
+                self.presenter.presentCountriesInfo(response: MainViewDataFlow.CountriesInfoCase.Response(response: response))
+            }
+        }
     }
     
     func fetchTotalStatistic(request: MainViewDataFlow.CountriesTotalStatisticCase.Request) {

@@ -36,7 +36,7 @@ extension MainDataProvider: MainDataProviderProtocols{
         }
     }
     
-    func sendRequestCountries(completion: @escaping (CountriesData?, String?) -> Void) {
+    func sendRequestCountries(completion: @escaping (CountryInfo?, String?) -> Void) {
         apiService.requestCountries { (data, err) in
             completion(data, err)
         }

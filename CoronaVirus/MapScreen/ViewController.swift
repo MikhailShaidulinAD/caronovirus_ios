@@ -137,6 +137,7 @@ class ViewController: UIViewController {
         self.view.backgroundColor = .white
         setupViews()
         createFetchTotalStatistic()
+        createFetchCountiesInfo()
 //        setupNavBar()
     }
     
@@ -250,6 +251,11 @@ extension ViewController{
         interactor?.fetchTotalStatistic(request: request)
     }
     
+    private func createFetchCountiesInfo(){
+        let request = MainViewDataFlow.CountriesInfoCase.Request()
+        interactor?.fetchCountriesInfo(request: request)
+    }
+    
 }
 
 extension ViewController: MainViewControllerProtocols{
@@ -257,10 +263,16 @@ extension ViewController: MainViewControllerProtocols{
         switch viewState.result {
         case .success(countriesItems: let items):
             items.forEach{[unowned self](item) in
-            let iMarker = GMSMarker()
-//                iMarker.position = CLLocationCoordinate2DMake(item![0], item.coordinates![1])
-                iMarker.map = self.mapView
+                if let lat = item.lat, let lon = item.lon, item.cases > 0{
+                    let iMarker = GMSMarker()
+                    iMarker.position = CLLocationCoordinate2DMake(lat, lon)
+                    let rect =  CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+                    let icon = MarkAnnotationView(frame: rect, mark: String(item.cases), freeBoxes: item.cases)
+                    iMarker.icon = icon.asImage()
+                    iMarker.map = self.mapView
+                }
             }
+            self.loadViewIfNeeded()
         case .failure(let err):break
         }
     }

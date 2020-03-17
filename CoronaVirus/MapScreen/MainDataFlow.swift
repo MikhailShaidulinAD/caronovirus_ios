@@ -23,12 +23,12 @@ enum MainViewDataFlow{
         }
         
         enum RequestResult {
-            case success(CountriesData)
+            case success(CountryInfo)
             case failure(String)
         }
         
         enum ViewControllerState {
-            case success(countriesItems:[Int])
+            case success(countriesItems:CountryInfo)
             case failure(String)
         }
     }

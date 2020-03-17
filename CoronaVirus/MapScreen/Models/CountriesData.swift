@@ -8,11 +8,12 @@
 
 import Foundation
 
-struct CountriesData: Codable {
+struct CountriesData: Decodable {
     let id: Int
     let countryCode, name, population, north: String
     let south, east, west: String
     let cases, deaths, recovered: Int
+    var lat, lon:Double?
 }
 
-typealias UserInfo = [CountriesData]
+typealias CountryInfo = [CountriesData]

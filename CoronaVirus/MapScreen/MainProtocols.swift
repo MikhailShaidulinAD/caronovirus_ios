@@ -24,7 +24,7 @@ protocol MainDataProviderProtocols {
     // API
     func sendRequestTestResult(deviceID:String, positiveCount:Int, completion: @escaping(TestResponseData?, String?)->Void)
     func sendRequestStatistic(completion: @escaping (TotalStatisticData?, String?)->Void)
-    func sendRequestCountries(completion: @escaping (CountriesData?, String?)->Void)
+    func sendRequestCountries(completion: @escaping (CountryInfo?, String?)->Void)
     
     //GETTER
     func getDeviceID()->String

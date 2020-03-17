@@ -14,10 +14,19 @@ class MainPresenter {
     required init(view:ViewController) {
         self.viewController = view
     }
+    
 }
 
 extension MainPresenter: MainPresenterProtocols{
     func presentCountriesInfo(response: MainViewDataFlow.CountriesInfoCase.Response) {
+        let viewState: MainViewDataFlow.CountriesInfoCase.ViewControllerState
+        switch response.response {
+        case .success(let countryData):
+            viewState = .success(countriesItems: countryData)
+        case .failure(let err):
+            viewState = .failure(err)
+        }
+        self.viewController.showCountiesInfo(viewState: MainViewDataFlow.CountriesInfoCase.ViewModel(result: viewState))
     }
     
     func presentTotalStatistic(response: MainViewDataFlow.CountriesTotalStatisticCase.Response) {
