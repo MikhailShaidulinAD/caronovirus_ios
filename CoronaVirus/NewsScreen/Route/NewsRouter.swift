@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+class NewsRouter{
+    let dataStoreList:AppDataStories
+    required init(data:AppDataStories) {
+        self.dataStoreList = data
+    }
+}
