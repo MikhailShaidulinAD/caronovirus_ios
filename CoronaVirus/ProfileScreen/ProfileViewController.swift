@@ -146,6 +146,45 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = UIColor(red: 60/255, green: 145/255, blue: 224/255, alpha: 1)
         return view
     }()
+    
+    lazy var penView:UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named:"pen")
+        return view
+    }()
+    
+    lazy var penView2:UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named:"pen")
+        return view
+    }()
+    
+    lazy var penView3:UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named:"pen")
+        return view
+    }()
+    
+    lazy var penView4:UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named:"pen")
+        return view
+    }()
+    let dataSource = CustomPickerDataSource()
+    lazy var picker:UIPickerView = {
+        let view = UIPickerView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = dataSource
+        view.dataSource = dataSource
+        view.backgroundColor = UIColor(red: 210/255, green: 214/255, blue: 219/255, alpha: 1)
+        view.showsSelectionIndicator = true
+        view.isUserInteractionEnabled = true
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,20 +246,32 @@ class ProfileViewController: UIViewController {
         sickTitle.topAnchor.constraint(equalTo: countryTitle.bottomAnchor, constant: 16).isActive = true
             
             viewCertificate.addSubview(ageValue)
-            ageValue.leftAnchor.constraint(equalTo: self.ageTitle.leftAnchor, constant: 8).isActive = true
+            ageValue.leftAnchor.constraint(equalTo: self.ageTitle.rightAnchor, constant: 8).isActive = true
             ageValue.topAnchor.constraint(equalTo: ageTitle.topAnchor, constant: 0).isActive = true
+        viewCertificate.addSubview(penView4)
+        penView4.leftAnchor.constraint(equalTo: ageValue.rightAnchor, constant: 4).isActive = true
+        penView4.topAnchor.constraint(equalTo: ageValue.topAnchor, constant: 0).isActive = true
             
             viewCertificate.addSubview(genderValue)
-            genderValue.leftAnchor.constraint(equalTo: self.genderTitle.leftAnchor, constant: 8).isActive = true
+            genderValue.leftAnchor.constraint(equalTo: self.genderTitle.rightAnchor, constant: 8).isActive = true
             genderValue.topAnchor.constraint(equalTo: genderTitle.topAnchor, constant: 0).isActive = true
+        viewCertificate.addSubview(penView3)
+        penView3.leftAnchor.constraint(equalTo: genderValue.rightAnchor, constant: 4).isActive = true
+        penView3.topAnchor.constraint(equalTo: genderValue.topAnchor, constant: 0).isActive = true
             
             viewCertificate.addSubview(countryValue)
-            countryValue.leftAnchor.constraint(equalTo: self.countryTitle.leftAnchor, constant: 8).isActive = true
+            countryValue.leftAnchor.constraint(equalTo: self.countryTitle.rightAnchor, constant: 8).isActive = true
             countryValue.topAnchor.constraint(equalTo: countryTitle.topAnchor, constant: 0).isActive = true
+        viewCertificate.addSubview(penView)
+        penView.leftAnchor.constraint(equalTo: countryValue.rightAnchor, constant: 4).isActive = true
+        penView.topAnchor.constraint(equalTo: countryValue.topAnchor, constant: 0).isActive = true
         
         viewCertificate.addSubview(sickValue)
-        sickValue.leftAnchor.constraint(equalTo: self.sickTitle.leftAnchor, constant: 8).isActive = true
+        sickValue.leftAnchor.constraint(equalTo: self.sickTitle.rightAnchor, constant: 8).isActive = true
         sickValue.topAnchor.constraint(equalTo: sickTitle.topAnchor, constant: 0).isActive = true
+        viewCertificate.addSubview(penView2)
+        penView2.leftAnchor.constraint(equalTo: sickValue.rightAnchor, constant: 4).isActive = true
+        penView2.topAnchor.constraint(equalTo: sickValue.topAnchor, constant: 0).isActive = true
             
             viewCertificate.addSubview(qrImage)
             qrImage.topAnchor.constraint(equalTo: self.sickTitle.bottomAnchor, constant: 16).isActive = true
@@ -241,8 +292,38 @@ class ProfileViewController: UIViewController {
         btnEdit.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16).isActive = true
         btnEdit.heightAnchor.constraint(equalToConstant: 48).isActive = true
         viewCertificate.addDarkShadow()
+        self.view.addSubview(picker)
+        picker.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50).isActive = true
+        picker.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
+        picker.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
+        picker.sizeToFit()
+        let toolbar = UIToolbar()
+        let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(pickerDone))
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let close = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(pickerClose))
+        toolbar.setItems([done,flex, close], animated: false)
+        toolbar.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 250/255, alpha: 1)
+        toolbar.isUserInteractionEnabled = true
+        toolbar.sizeToFit()
+        toolbar.translatesAutoresizingMaskIntoConstraints = false
+        picker.showsSelectionIndicator = true
+        picker.addSubview(toolbar)
+        toolbar.leftAnchor.constraint(equalTo: self.picker.leftAnchor, constant: 0).isActive = true
+        toolbar.rightAnchor.constraint(equalTo: self.picker.rightAnchor, constant: 0).isActive = true
+        toolbar.topAnchor.constraint(equalTo: self.picker.topAnchor, constant: 0).isActive = true
+        self.tabBarController?.tabBar.isHidden = false
             self.view.layoutIfNeeded()
     }
     
 
+}
+
+extension ProfileViewController{
+    @objc func pickerDone(sender: UIBarButtonItem){
+        
+    }
+    
+    @objc func pickerClose(_ sender: Any){
+        view.endEditing(true)
+    }
 }
