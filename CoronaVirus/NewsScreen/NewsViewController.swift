@@ -28,7 +28,7 @@ class NewsViewController: UIViewController {
         view.dataSource = data
         view.delegate = data
         view.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell().id)
-        view.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: -16, right: 16)
+        view.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         return view
     }()
     
@@ -37,6 +37,7 @@ class NewsViewController: UIViewController {
     let configurator = NewsConfigurate()
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: false)
         self.view.backgroundColor = .white
         configurator.configureModule(viewController: self)
         setupViews()
@@ -46,9 +47,10 @@ class NewsViewController: UIViewController {
     private func setupViews(){
         self.view.addSubview(collection)
         collection.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
-        collection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        collection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -70).isActive = true
         collection.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
         collection.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
+        data.delegate = self
         self.view.addSubview(loader)
         loader.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
         loader.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
@@ -84,6 +86,17 @@ extension NewsViewController: NewsViewControllerProtocols{
             showAlertInformation(text: err)
         }
     }
+}
+
+extension NewsViewController: NewsDataSourcesProtocols{
+    func updateLoading() {
+        self.loader.startLoading()
+        createFetchRequestNews()
+    }
     
-    
+    func openOutsideUrl(url: String) {
+        if let urlAuthor = URL(string: url) {
+            UIApplication.shared.open(urlAuthor)
+        }
+    }
 }
