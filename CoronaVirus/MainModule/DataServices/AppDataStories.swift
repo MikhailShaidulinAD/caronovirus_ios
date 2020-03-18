@@ -10,4 +10,5 @@ import Foundation
 
 class AppDataStories : APIService {
     var mainDataStore: MainStore = MainStore()
+    var profileDataStore: ProfileStore = ProfileStore()
 }

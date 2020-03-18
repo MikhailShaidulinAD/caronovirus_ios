@@ -26,6 +26,7 @@ extension MainPresenter: MainPresenterProtocols{
         case .failure(let err):
             viewState = .failure(err: err)
         }
+        self.viewController.completeUserInfo(viewState: MainViewDataFlow.CreateUserCase.ViewModel(viewState: viewState))
     }
     
     func presentCountriesInfo(response: MainViewDataFlow.CountriesInfoCase.Response) {

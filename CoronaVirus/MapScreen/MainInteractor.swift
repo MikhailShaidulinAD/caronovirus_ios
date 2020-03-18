@@ -22,17 +22,19 @@ class MainInteractor {
         case 3:
             if location == nil {
                 location = LocationManager()
-                location?.startUpdating()
             }
         case 4:
             if location == nil {
                 location = LocationManager()
-                location?.startUpdating()
             }
         case .none:
-            break
+            if location == nil {
+                location = LocationManager()
+            }
         case .some(_):
-            break
+            if location == nil {
+                location = LocationManager()
+            }
         }
     }
     
@@ -65,6 +67,11 @@ class MainInteractor {
 }
 
 extension MainInteractor: MainInteractorProtocols{
+    func requireLocation(request: MainViewDataFlow.CheckLocationAccessCase.Request) {
+        location?.startUpdating()
+        location?.delegate = self
+    }
+    
     func sendRequestUser(request: MainViewDataFlow.CreateUserCase.Request) {
         if dataProvider.getUserInfo() == nil {
             let countryId = dataProvider.getCountryId()
@@ -79,16 +86,17 @@ extension MainInteractor: MainInteractorProtocols{
                                 }
                             }
                         }
+                    }
                         self.dataProvider.sendRequestCreateUser(deviceID: self.dataProvider.getDeviceID(), countryId: self.dataProvider.getCountryId() ?? 233) { (data, err) in
                             let response:MainViewDataFlow.CreateUserCase.RequestResult
                             if data != nil{
+                                self.dataProvider.setUserInfo(user: data!)
                                 response = .success
                             }else{
                                 response = .failure(err ?? "Unkown Error")
                             }
                             self.presenter.presentUserInfo(response: MainViewDataFlow.CreateUserCase.Response(response: response))
                         }
-                    }
                 }
             }
 
@@ -134,6 +142,13 @@ extension MainInteractor: MainInteractorProtocols{
             dataProvider.sendRequestTestResult(deviceID: id, positiveCount: result) { (data, err) in
                 let response: MainViewDataFlow.TestCase.RequestResult
                 if data != nil{
+                    let status:String
+                    if data?.sick ?? false {
+                        status = "SICK"
+                    }else{
+                        status = "NOT SICK"
+                    }
+                    self.dataProvider.setSickStatus(status: status)
                     response = .success(data!)
                 }else{
                     response = .failure(err!)
@@ -144,4 +159,10 @@ extension MainInteractor: MainInteractorProtocols{
     }
     
     
+}
+
+extension MainInteractor: LocationManagerDelegate{
+    func accessLocation() {
+        self.sendRequestUser(request: MainViewDataFlow.CreateUserCase.Request())
+    }
 }

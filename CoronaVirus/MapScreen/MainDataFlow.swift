@@ -84,6 +84,11 @@ enum MainViewDataFlow{
             }
     }
     
+    //MARK: - Location
+    enum RequireLocation {
+        struct Request {}
+    }
+    
     //MARK: - Create User
     enum CreateUserCase {
         struct Request {}

@@ -22,6 +22,11 @@ class MainDataProvider {
 }
 
 extension MainDataProvider: MainDataProviderProtocols{
+    func setSickStatus(status: String) {
+        dataStore.sickStatus = status
+    }
+    
+    
     func getCountryId() -> Int? {
         return dataStore.country
     }
