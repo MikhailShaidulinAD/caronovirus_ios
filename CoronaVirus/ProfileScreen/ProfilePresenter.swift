@@ -17,11 +17,22 @@ class ProfilePresenter{
 }
 
 extension ProfilePresenter:ProfilePresenterProtocols{
+    func presentNewUserData(response: ProfileDataFlow.CreateChangeUserInfo.Response) {
+        let viewState: ProfileDataFlow.CreateChangeUserInfo.ViewControllerState
+        switch response.response {
+        case .success:
+            viewState = .success
+        case .failure(let err):
+            viewState = .failure(err)
+        }
+        self.viewController.showResultChangesUser(viewModel: ProfileDataFlow.CreateChangeUserInfo.ViewModel(viewState: viewState))
+    }
+    
     func presentUserInfo(response: ProfileDataFlow.FetchUserInfo.Response) {
         switch response.response {
         case .success(let data, let sickStatus):
             let viewState:ProfileDataFlow.FetchUserInfo.ViewControllerState
-            viewState = .result(id: String(data.user.id), fullname: "\(data.user.name ?? "") \(data.user.surname ?? "")", age: String(data.user.age ?? 0), gender: data.user.gender ?? "", country: data.user.country_name ?? "", status: sickStatus)
+            viewState = .result(id: String(data.user.id), firstName: data.user.name ?? "", lastName: data.user.surname ?? "", age: String(data.user.age ?? 0), gender: data.user.gender ?? "", country: data.user.country_name ?? "", status: sickStatus)
             self.viewController.showUserInfo(viewModel: ProfileDataFlow.FetchUserInfo.ViewModel(viewState: viewState))
         }
     }

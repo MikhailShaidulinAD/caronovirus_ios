@@ -23,10 +23,10 @@ extension MainPresenter: MainPresenterProtocols{
         switch response.response {
         case .success:
             viewState = .success
-            self.viewController.completeUserInfo(viewState: MainViewDataFlow.CreateUserCase.ViewModel(viewState: viewState))
         case .failure(let err):
             viewState = .failure(err: err)
         }
+        self.viewController.completeUserInfo(viewState: MainViewDataFlow.CreateUserCase.ViewModel(viewState: viewState))
     }
     
     func presentCountriesInfo(response: MainViewDataFlow.CountriesInfoCase.Response) {

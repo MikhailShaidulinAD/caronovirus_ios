@@ -19,6 +19,20 @@ class ProfileInteractor{
 }
 
 extension ProfileInteractor: ProfileInteractorProtocols{
+    func fetchUpdateUserData(request: ProfileDataFlow.CreateChangeUserInfo.Request) {
+        let dataUser = UserRequestModel(name: request.name, surname: request.surname, age: Int(request.age ?? "0"), gender: request.gender, country_name: request.country, device_id: self.dataProvider.getDeviceID())
+        self.dataProvider.requestChangeUser(newData: dataUser) { (data, err) in
+            let response: ProfileDataFlow.CreateChangeUserInfo.RequestResult
+            if data != nil{
+                response = .success
+                self.dataProvider.setUserInfo(user: data!)
+            }else{
+                response = .failure(err ?? "Error response body")
+            }
+            self.presenter.presentNewUserData(response: ProfileDataFlow.CreateChangeUserInfo.Response(response: response))
+        }
+    }
+    
     func fetchUserInfo(request: ProfileDataFlow.FetchUserInfo.Request) {
         if let userInfo = dataProvider.getUserInfo(){
             let response:ProfileDataFlow.FetchUserInfo.RequestResult

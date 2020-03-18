@@ -9,11 +9,16 @@
 import Foundation
 import CoreLocation
 
+protocol LocationManagerDelegate {
+    func accessLocation()
+}
+
 class LocationManager:NSObject, CLLocationManagerDelegate {
     private let manager: CLLocationManager
     
     var lat:Double?
     var long:Double?
+    var delegate:LocationManagerDelegate?
 
 
     init(manager: CLLocationManager = CLLocationManager()) {
@@ -23,9 +28,11 @@ class LocationManager:NSObject, CLLocationManagerDelegate {
 
     func startUpdating() {
         self.manager.delegate = self
+        self.manager.desiredAccuracy = kCLLocationAccuracyBest
         self.manager.requestWhenInUseAuthorization()
         self.manager.startUpdatingLocation()
     }
+
         
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             long = locations.last?.coordinate.longitude
@@ -35,6 +42,9 @@ class LocationManager:NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             manager.startUpdatingLocation()
+            delegate?.accessLocation()
+        } else if status == .denied{
+            print("denied")
         }
     }
     

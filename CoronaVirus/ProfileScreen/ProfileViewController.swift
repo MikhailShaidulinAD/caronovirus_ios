@@ -37,9 +37,19 @@ class ProfileViewController: UIViewController {
         return view
     }()
     
-    lazy var fullName:UITextField = {
+    lazy var firstName:UITextField = {
         let view = UITextField()
-        view.placeholder = "Write your full name"
+        view.placeholder = "First Name"
+        view.textColor = .black
+        view.delegate = self
+        view.font = UIFont(name: "EuclidFlex-Bold", size: 16)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    lazy var lastName:UITextField = {
+        let view = UITextField()
+        view.placeholder = "Last Name"
         view.textColor = .black
         view.delegate = self
         view.font = UIFont(name: "EuclidFlex-Bold", size: 16)
@@ -144,7 +154,10 @@ class ProfileViewController: UIViewController {
         view.titleLabel?.textAlignment = .center
         view.isUserInteractionEnabled = true
         view.layer.cornerRadius = 5
+        view.isEnabled = true
+        view.isSelected = true
         view.backgroundColor = UIColor(red: 60/255, green: 145/255, blue: 224/255, alpha: 1)
+        view.addTarget(self, action: #selector(saveEditUserInfo(_:)), for: .touchUpInside)
         return view
     }()
     
@@ -196,6 +209,13 @@ class ProfileViewController: UIViewController {
         return view
     }()
     
+    let loader: LoaderView = {
+        let view = LoaderView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.alpha = 0
+        return view
+    }()
+    
     var interactor:ProfileInteractor?
     var router:ProfileRoute?
     private var configurator = ProfileConfigurator()
@@ -205,6 +225,11 @@ class ProfileViewController: UIViewController {
         self.view.backgroundColor = .white
         setupViews()
         navigationController?.setNavigationBarHidden(true, animated: false)
+        createFetchUserInfo()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         createFetchUserInfo()
     }
     
@@ -246,13 +271,17 @@ class ProfileViewController: UIViewController {
             IDprofile.topAnchor.constraint(equalTo: self.avatar.bottomAnchor, constant: 16).isActive = true
             IDprofile.leftAnchor.constraint(equalTo: self.avatar.leftAnchor, constant: 0).isActive = true
             
-            viewCertificate.addSubview(fullName)
-            fullName.leftAnchor.constraint(equalTo: self.avatar.leftAnchor, constant: 0).isActive = true
-            fullName.topAnchor.constraint(equalTo: IDprofile.bottomAnchor, constant: 16).isActive = true
+            viewCertificate.addSubview(firstName)
+            firstName.leftAnchor.constraint(equalTo: self.avatar.leftAnchor, constant: 0).isActive = true
+            firstName.topAnchor.constraint(equalTo: IDprofile.bottomAnchor, constant: 16).isActive = true
+        
+        viewCertificate.addSubview(lastName)
+        lastName.leftAnchor.constraint(equalTo: self.firstName.rightAnchor, constant: 8).isActive = true
+        lastName.topAnchor.constraint(equalTo: self.firstName.topAnchor, constant: 0).isActive = true
             
             viewCertificate.addSubview(ageTitle)
             ageTitle.leftAnchor.constraint(equalTo: self.avatar.leftAnchor, constant: 0).isActive = true
-            ageTitle.topAnchor.constraint(equalTo: fullName.bottomAnchor, constant: 16).isActive = true
+            ageTitle.topAnchor.constraint(equalTo: firstName.bottomAnchor, constant: 16).isActive = true
             
             viewCertificate.addSubview(genderTitle)
             genderTitle.leftAnchor.constraint(equalTo: self.ageTitle.leftAnchor, constant: 0).isActive = true
@@ -326,7 +355,11 @@ class ProfileViewController: UIViewController {
         penView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openPickerCountry)))
         penView3.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openPickerGender)))
         self.view.layoutIfNeeded()
-        
+        self.view.addSubview(loader)
+        loader.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+        loader.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        loader.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
+        loader.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
         picker.showsSelectionIndicator = true
 
         self.tabBarController?.tabBar.isHidden = false
@@ -346,6 +379,12 @@ extension ProfileViewController{
 }
 
 extension ProfileViewController{
+    
+    @objc func saveEditUserInfo(_ sender: Any){
+        view.endEditing(true)
+        loader.startLoading()
+        interactor?.fetchUpdateUserData(request: ProfileDataFlow.CreateChangeUserInfo.Request(name: firstName.text, surname: lastName.text, age: ageValue.text, gender: genderValue.text, country: countryValue.text))
+    }
     
     @objc func openPickerAge(){
         interactor?.fetchPrickerAge(request: ProfileDataFlow.CreatePicker.Request())
@@ -372,6 +411,7 @@ extension ProfileViewController{
             self.countryValue.text = dataSource.getDoneValue()
         case .gender:
             self.genderValue.text = dataSource.getDoneValue()
+            checkGenderIndefication(gender: dataSource.getDoneValue())
         case .none:
             break
         }
@@ -380,21 +420,54 @@ extension ProfileViewController{
             self.picker.isHidden = true
         }
     }
+    private func showAlertInformation(text: String){
+        let alert = UIAlertController(title: "Profile", message: text, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(alert) in
+        }))
+        self.navigationController?.present(alert, animated: false, completion: nil)
+    }
+    
+    private func checkGenderIndefication(gender:String?){
+        if gender == "Female" {
+            avatar.image = UIImage(named: "avatar_woman")
+        }else{
+            avatar.image = UIImage(named: "avatar_man")
+        }
+    }
 }
 
 
+
+
 extension ProfileViewController: ProfileViewProtocols{
+    func showResultChangesUser(viewModel: ProfileDataFlow.CreateChangeUserInfo.ViewModel) {
+        loader.stopLoading()
+        switch viewModel.viewState {
+        case .success:
+            showAlertInformation(text: "Profile change success")
+        case .failure(let err):
+            showAlertInformation(text: err)
+        }
+    }
+    
     func showUserInfo(viewModel: ProfileDataFlow.FetchUserInfo.ViewModel) {
         switch viewModel.viewState {
-        case .result(id: let idUser, fullname: let nameUser, age: let ageUser, gender: let genderUser, country: let countryUser, status: let statusUser):
+        case .result(id: let idUser, firstName: let nameUser, lastName: let lastNameUser, age: let ageUser, gender: let genderUser, country: let countryUser, status: let statusUser):
             self.IDprofile.text = "ID: \(idUser)"
             if !nameUser.isEmpty && nameUser.count > 1 {
-                self.fullName.text = nameUser
+                self.firstName.text = nameUser
+                firstName.sizeToFit()
+            }
+            if !lastNameUser.isEmpty && lastNameUser.count > 1 {
+                self.lastName.text = lastNameUser
+                lastName.sizeToFit()
             }
             self.ageValue.text = ageUser
+            checkGenderIndefication(gender: genderUser)
             self.genderValue.text = genderUser
             self.countryValue.text = countryUser
             self.sickValue.text = statusUser
+            self.view.layoutIfNeeded()
         }
     }
     

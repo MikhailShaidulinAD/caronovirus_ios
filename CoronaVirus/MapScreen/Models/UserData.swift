@@ -22,7 +22,7 @@ struct User: Decodable {
     let created_at: String
     let name:String?
     let surname: String?
-    let certificate_id:String?
+//    let certificate_id:String?
     let country_name:String?
     let age: Int?
     let avatar: String?

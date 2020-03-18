@@ -9,22 +9,26 @@
 import UIKit
 
 class NewsViewController: UIViewController {
+    
+    let collection:UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .none
+        view.dataSource = data
+        view.delegate = data
+        view.register(TestsCell.self, forCellWithReuseIdentifier: TestsCell().id)
+        view.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        return view
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setupViews(){
+        
     }
-    */
 
 }

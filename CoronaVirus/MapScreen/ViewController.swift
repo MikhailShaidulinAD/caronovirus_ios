@@ -123,7 +123,7 @@ class ViewController: UIViewController {
     }()
     
     lazy var popUpResult: PopUpResult = {
-        let view = PopUpResult(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 64, height: self.view.frame.width * 0.2))
+        let view = PopUpResult(frame: CGRect(x: 0, y: 0, width: self.view.frame.width * 0.9, height: self.view.frame.width * 0.4))
         view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -133,6 +133,13 @@ class ViewController: UIViewController {
         let blurEffect = UIBlurEffect(style: .light)
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let loader: LoaderView = {
+        let view = LoaderView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.alpha = 0
         return view
     }()
     
@@ -151,6 +158,8 @@ class ViewController: UIViewController {
         self.mapView = GMSMapView()
         self.view.backgroundColor = .white
         setupViews()
+        loader.startLoading()
+        checkAccessLocation()
         createFetchTotalStatistic()
         createFetchCountiesInfo()
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -256,6 +265,12 @@ extension ViewController{
         popUpResult.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         popUpResult.alpha = 0
         popUpResult.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closePopUp)))
+        
+        self.view.addSubview(loader)
+        loader.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+        loader.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        loader.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
+        loader.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
     }
     
     private func setupNavBar(){
@@ -292,7 +307,7 @@ extension ViewController{
                     createRequestUserInfo()
                 case .denied:
                     showAccessLocationAlert(text: "Unable to retrieve your location data because geolocation is disabled")
-                case .notDetermined: createRequestUserInfo()
+                case .notDetermined: createRequireLocation()
                 case .restricted:
                     showAccessLocationAlert(text: "Unable to retrieve your location data because geolocation is disabled")
                 @unknown default:
@@ -303,7 +318,8 @@ extension ViewController{
     private func showPopUpResult(isSick:Bool) {
         visualEffectView.isUserInteractionEnabled = true
         popUpResult.isUserInteractionEnabled = true
-        popUpResult.setupViews(isResultPositive: isSick)
+        popUpResult.setupViews()
+        popUpResult.updateDescription(isResultPositive: isSick)
         UIView.animate(withDuration: 0.5){
             self.visualEffectView.alpha = 1
             self.popUpResult.alpha = 1
@@ -335,6 +351,7 @@ extension ViewController{
     }
     
     private func createSendTestResult(count:Int){
+        loader.startLoading()
         let request:MainViewDataFlow.TestCase.RequestBody
         request = .positiveCount(count)
         interactor?.sendResultTest(request: MainViewDataFlow.TestCase.Request(request: request))
@@ -345,11 +362,17 @@ extension ViewController{
         interactor?.sendRequestUser(request: request)
     }
     
+    private func createRequireLocation(){
+        let request = MainViewDataFlow.CheckLocationAccessCase.Request()
+        interactor?.requireLocation(request: request)
+    }
+    
 }
 
 extension ViewController: MainViewControllerProtocols{
     func completeUserInfo(viewState: MainViewDataFlow.CreateUserCase.ViewModel) {
         router?.routeUserInfo()
+        loader.stopLoading()
     }
     
     func showCountiesInfo(viewState: MainViewDataFlow.CountriesInfoCase.ViewModel) {
@@ -366,13 +389,14 @@ extension ViewController: MainViewControllerProtocols{
                     iMarker.map = self.mapView
                 }
             }
-            checkAccessLocation()
+            createRequestUserInfo()
             self.loadViewIfNeeded()
         case .failure(let err):break
         }
     }
     
     func showTestResult(viewState: MainViewDataFlow.TestCase.ViewModel) {
+        loader.stopLoading()
         switch viewState.result {
         case .success(let isSick):
             showPopUpResult(isSick: isSick)

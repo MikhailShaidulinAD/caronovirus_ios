@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import AdSupport
+import UIKit
 
 class ProfileDataProvider{
     private let dataStore:ProfileStore
@@ -19,6 +21,28 @@ class ProfileDataProvider{
 }
 
 extension ProfileDataProvider: ProfileDataProviderProtocols{
+    func setUserInfo(user: UserData) {
+        dataStore.user = user
+    }
+    
+    func getDeviceID() -> String {
+                let deviceID:String
+        if ASIdentifierManager.shared().isAdvertisingTrackingEnabled{
+             print("true")
+             deviceID = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+         } else{
+             print("false")
+             deviceID = UIDevice.current.identifierForVendor?.uuidString ?? ""
+         }
+         return deviceID
+    }
+    
+    func requestChangeUser(newData: UserRequestModel, completion: @escaping (UserData?, String?) -> Void) {
+        self.apiService.requestChangeUserInfo(request: newData) { (data, err) in
+            completion(data, err)
+        }
+    }
+    
     func getSickStatus() -> String? {
         return dataStore.sickStatus
     }

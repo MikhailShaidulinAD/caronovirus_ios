@@ -13,6 +13,7 @@ protocol MainInteractorProtocols {
     func fetchTotalStatistic(request:MainViewDataFlow.CountriesTotalStatisticCase.Request)
     func sendResultTest(request:MainViewDataFlow.TestCase.Request)
     func sendRequestUser(request:MainViewDataFlow.CreateUserCase.Request)
+    func requireLocation(request:MainViewDataFlow.CheckLocationAccessCase.Request)
 }
 
 protocol MainPresenterProtocols {

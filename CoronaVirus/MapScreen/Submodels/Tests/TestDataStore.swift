@@ -33,6 +33,10 @@ func collectionView(_ collectionView: UICollectionView, layout collectionViewLay
 func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return data?.count ?? 0
 }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        collectionView.isScrollEnabled = false
+    }
 
 func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: TestsCell.self), for: indexPath) as! TestsCell

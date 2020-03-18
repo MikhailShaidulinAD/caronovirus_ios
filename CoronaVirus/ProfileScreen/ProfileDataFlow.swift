@@ -35,7 +35,7 @@ enum ProfileDataFlow{
         }
         
         enum ViewControllerState {
-            case result(id:String, fullname:String, age:String, gender:String, country:String, status:String)
+            case result(id:String, firstName:String, lastName:String, age:String, gender:String, country:String, status:String)
         }
         
         enum RequestResult {
@@ -63,5 +63,33 @@ enum ProfileDataFlow{
         enum RequestResult {
             case success(PickedModel)
         }
+    }
+    
+    enum CreateChangeUserInfo {
+            struct Request {
+                let name:String?
+                let surname:String?
+                let age:String?
+                let gender:String?
+                let country:String?
+            }
+            
+            struct Response {
+                var response:ProfileDataFlow.CreateChangeUserInfo.RequestResult
+            }
+            
+            struct ViewModel {
+                var viewState: ProfileDataFlow.CreateChangeUserInfo.ViewControllerState
+            }
+            
+            enum ViewControllerState {
+                case success
+                case failure(String)
+            }
+            
+            enum RequestResult {
+                case success
+                case failure(String)
+            }
     }
 }

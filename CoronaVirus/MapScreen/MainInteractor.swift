@@ -22,17 +22,19 @@ class MainInteractor {
         case 3:
             if location == nil {
                 location = LocationManager()
-                location?.startUpdating()
             }
         case 4:
             if location == nil {
                 location = LocationManager()
-                location?.startUpdating()
             }
         case .none:
-            break
+            if location == nil {
+                location = LocationManager()
+            }
         case .some(_):
-            break
+            if location == nil {
+                location = LocationManager()
+            }
         }
     }
     
@@ -65,6 +67,11 @@ class MainInteractor {
 }
 
 extension MainInteractor: MainInteractorProtocols{
+    func requireLocation(request: MainViewDataFlow.CheckLocationAccessCase.Request) {
+        location?.startUpdating()
+        location?.delegate = self
+    }
+    
     func sendRequestUser(request: MainViewDataFlow.CreateUserCase.Request) {
         if dataProvider.getUserInfo() == nil {
             let countryId = dataProvider.getCountryId()
@@ -152,4 +159,10 @@ extension MainInteractor: MainInteractorProtocols{
     }
     
     
+}
+
+extension MainInteractor: LocationManagerDelegate{
+    func accessLocation() {
+        self.sendRequestUser(request: MainViewDataFlow.CreateUserCase.Request())
+    }
 }

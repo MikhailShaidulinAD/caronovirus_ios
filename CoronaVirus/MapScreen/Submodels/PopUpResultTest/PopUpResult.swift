@@ -163,13 +163,18 @@ class PopUpResult: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupViews(isResultPositive:Bool){
+    func setupViews(){
+        let views = subviews
+        for view in views {
+            view.removeFromSuperview()
+        }
         addSubview(viewBackground)
         viewBackground.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive = true
         viewBackground.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
@@ -268,14 +273,21 @@ class PopUpResult: UIView {
         descriptionResult.leftAnchor.constraint(equalTo: self.viewCertificate.rightAnchor, constant: 4).isActive = true
         descriptionResult.rightAnchor.constraint(equalTo: self.viewBackground.rightAnchor, constant: 4).isActive = true
         descriptionResult.sizeToFit()
-        if !isUserInteractionEnabled {
+        descriptionResult.text = "Urgently apply to the nearest hospital.\nYou have a high probability of coronavirus."
+        layoutIfNeeded()
+    }
+    
+    func updateDescription(isResultPositive:Bool){
+        if !isResultPositive {
             let color = UIColor(red: 0/255, green: 161/255, blue: 26/255, alpha: 1)
             resultTitle.textColor = color
             descriptionResult.textColor = color
+            descriptionResult.text = "You are perfectly healthy! \nYou are not infected by coronavirus"
         }else{
             let color = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 1)
             resultTitle.textColor = color
             descriptionResult.textColor = color
+            descriptionResult.text = "Urgently apply to the nearest hospital.\nYou have a high probability of coronavirus."
         }
     }
 }
