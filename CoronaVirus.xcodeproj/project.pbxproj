@@ -58,6 +58,7 @@
 		2D9F46BD2420041E00499AAC /* ProfileView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9F46BC2420041E00499AAC /* ProfileView.storyboard */; };
 		2D9F46C02420044200499AAC /* FaqViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9F46BF2420044200499AAC /* FaqViewController.swift */; };
 		2D9F46C22420045000499AAC /* FaqView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D9F46C12420045000499AAC /* FaqView.storyboard */; };
+		2DABCF43242211DE00041E5C /* PickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DABCF42242211DE00041E5C /* PickerModel.swift */; };
 		2DD10BAF241AE0700037B3E9 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD10BAE241AE0700037B3E9 /* MainInteractor.swift */; };
 		2DD10BB1241AE07E0037B3E9 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD10BB0241AE07E0037B3E9 /* MainPresenter.swift */; };
 		2DD10BB3241AE09C0037B3E9 /* MainDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD10BB2241AE09C0037B3E9 /* MainDataProvider.swift */; };
@@ -144,6 +145,7 @@
 		2D9F46BC2420041E00499AAC /* ProfileView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileView.storyboard; sourceTree = "<group>"; };
 		2D9F46BF2420044200499AAC /* FaqViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaqViewController.swift; sourceTree = "<group>"; };
 		2D9F46C12420045000499AAC /* FaqView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FaqView.storyboard; sourceTree = "<group>"; };
+		2DABCF42242211DE00041E5C /* PickerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerModel.swift; sourceTree = "<group>"; };
 		2DD10BAE241AE0700037B3E9 /* MainInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractor.swift; sourceTree = "<group>"; };
 		2DD10BB0241AE07E0037B3E9 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		2DD10BB2241AE09C0037B3E9 /* MainDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDataProvider.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 		2D9F46B9242003EB00499AAC /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
+				2DABCF41242211C700041E5C /* Models */,
 				2D43224B2421A7D20044AB43 /* Route */,
 				2D43224A2421A7BB0044AB43 /* DataProvider */,
 				2D40C70F2421915500EFBB57 /* Submodels */,
@@ -476,6 +479,14 @@
 				2D9F46C12420045000499AAC /* FaqView.storyboard */,
 			);
 			path = FAQScreen;
+			sourceTree = "<group>";
+		};
+		2DABCF41242211C700041E5C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2DABCF42242211DE00041E5C /* PickerModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		2DD10BB8241AE10D0037B3E9 /* DataProvider */ = {
@@ -746,6 +757,7 @@
 				2D9F46B6242003AA00499AAC /* NewsViewController.swift in Sources */,
 				2DD10BBB241AE1430037B3E9 /* MainService.swift in Sources */,
 				2DD10BB7241AE0F20037B3E9 /* MainProtocols.swift in Sources */,
+				2DABCF43242211DE00041E5C /* PickerModel.swift in Sources */,
 				2DD10BAF241AE0700037B3E9 /* MainInteractor.swift in Sources */,
 				2D9F46B3242002AD00499AAC /* NavigationBottomMenu.swift in Sources */,
 			);

@@ -79,16 +79,17 @@ extension MainInteractor: MainInteractorProtocols{
                                 }
                             }
                         }
+                    }
                         self.dataProvider.sendRequestCreateUser(deviceID: self.dataProvider.getDeviceID(), countryId: self.dataProvider.getCountryId() ?? 233) { (data, err) in
                             let response:MainViewDataFlow.CreateUserCase.RequestResult
                             if data != nil{
+                                self.dataProvider.setUserInfo(user: data!)
                                 response = .success
                             }else{
                                 response = .failure(err ?? "Unkown Error")
                             }
                             self.presenter.presentUserInfo(response: MainViewDataFlow.CreateUserCase.Response(response: response))
                         }
-                    }
                 }
             }
 
@@ -134,6 +135,13 @@ extension MainInteractor: MainInteractorProtocols{
             dataProvider.sendRequestTestResult(deviceID: id, positiveCount: result) { (data, err) in
                 let response: MainViewDataFlow.TestCase.RequestResult
                 if data != nil{
+                    let status:String
+                    if data?.sick ?? false {
+                        status = "SICK"
+                    }else{
+                        status = "NOT SICK"
+                    }
+                    self.dataProvider.setSickStatus(status: status)
                     response = .success(data!)
                 }else{
                     response = .failure(err!)

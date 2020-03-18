@@ -8,16 +8,23 @@
 
 import Foundation
 
-struct UserData: Codable {
-    let device_id: String
-    let country_id: Int
-    let updated_at, created_at: String
+struct UserData: Decodable {
+    let user:User
+}
+
+struct User: Decodable {
     let id: Int
-    let gender,avatar: String?
-    let age: Int?
+    let device_id: String
+    let passed_test:Int?
+    let country_id: Int
+    let result:Int?
+    let updated_at: String
+    let created_at: String
+    let name:String?
+    let surname: String?
     let certificate_id:String?
     let country_name:String?
-    let name, surname: String?
-    let result:Int?
-    let passed_test:Int?
+    let age: Int?
+    let avatar: String?
+    let gender:String?
 }

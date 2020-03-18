@@ -40,10 +40,12 @@ protocol MainDataProviderProtocols {
     func setCountriesInfo(data:CountryInfo)
     func setUserInfo(user:UserData)
     func setCountryId(id:Int)
+    func setSickStatus(status:String)
 }
 
 protocol MainViewControllerProtocols {
     func showCountiesInfo(viewState:MainViewDataFlow.CountriesInfoCase.ViewModel)
     func showTestResult(viewState:MainViewDataFlow.TestCase.ViewModel)
     func showFullStatistic(viewState:MainViewDataFlow.CountriesTotalStatisticCase.ViewModel)
+    func completeUserInfo(viewState:MainViewDataFlow.CreateUserCase.ViewModel)
 }

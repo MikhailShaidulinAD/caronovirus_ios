@@ -348,9 +348,14 @@ extension ViewController{
 }
 
 extension ViewController: MainViewControllerProtocols{
+    func completeUserInfo(viewState: MainViewDataFlow.CreateUserCase.ViewModel) {
+        router?.routeUserInfo()
+    }
+    
     func showCountiesInfo(viewState: MainViewDataFlow.CountriesInfoCase.ViewModel) {
         switch viewState.result {
         case .success(countriesItems: let items):
+            router?.routeCountriesInfo()
             items.forEach{[unowned self](item) in
                 if let lat = item.lat, let lon = item.lon, item.cases > 0{
                     let iMarker = GMSMarker()
@@ -371,6 +376,7 @@ extension ViewController: MainViewControllerProtocols{
         switch viewState.result {
         case .success(let isSick):
             showPopUpResult(isSick: isSick)
+            router?.routeSickStatus()
         case .failure(err: let err):break
         }
     }

@@ -8,9 +8,31 @@
 
 import Foundation
 
+protocol MainRouteProtocols {
+    func routeCountriesInfo()
+    func routeUserInfo()
+    func routeSickStatus()
+}
+
 class MainRoute {
-    let dataStoreList:AppDataStories
+    private let dataStoreList:AppDataStories
     required init(data:AppDataStories) {
         self.dataStoreList = data
     }
+}
+
+extension MainRoute: MainRouteProtocols{
+    func routeSickStatus() {
+        self.dataStoreList.profileDataStore.sickStatus = self.dataStoreList.mainDataStore.sickStatus
+    }
+    
+    func routeUserInfo() {
+        self.dataStoreList.profileDataStore.user = self.dataStoreList.mainDataStore.userInfo
+    }
+    
+    func routeCountriesInfo() {
+        self.dataStoreList.profileDataStore.country = self.dataStoreList.mainDataStore.countries
+    }
+    
+    
 }

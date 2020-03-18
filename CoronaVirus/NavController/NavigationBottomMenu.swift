@@ -31,7 +31,8 @@ class NavigationBottomMenu: UITabBarController {
         faqController.tabBarItem.image = UIImage(named: "bar_quest")
         faqController.tabBarItem.selectedImage = UIImage(named: "bar_quest")?.imageWithColor(color1: UIColor(red: 52/255, green: 120/255, blue: 246/255, alpha: 1))
         faqController.tabBarItem.title = "Info"
-        let profileController = UINavigationController(rootViewController: ProfileViewController())
+        let vcProfile = UIStoryboard(name: "ProfileView", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        let profileController = UINavigationController(rootViewController: vcProfile)
         profileController.tabBarItem.image = UIImage(named: "bar_profile")
         profileController.tabBarItem.selectedImage = UIImage(named: "bar_profile")?.imageWithColor(color1: UIColor(red: 52/255, green: 120/255, blue: 246/255, alpha: 1))
         profileController.tabBarItem.title = "Profile"

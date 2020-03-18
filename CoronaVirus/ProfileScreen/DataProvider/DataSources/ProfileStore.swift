@@ -9,4 +9,8 @@
 import Foundation
 
 class ProfileStore {
+    let gender = ["Male", "Female"]
+    var country:CountryInfo?
+    var user:UserData?
+    var sickStatus:String?
 }

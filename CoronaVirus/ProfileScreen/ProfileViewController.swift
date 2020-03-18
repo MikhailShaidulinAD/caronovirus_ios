@@ -37,10 +37,11 @@ class ProfileViewController: UIViewController {
         return view
     }()
     
-    let fullName:UILabel = {
-        let view = UILabel()
-        view.text = "Full Namme"
+    lazy var fullName:UITextField = {
+        let view = UITextField()
+        view.placeholder = "Write your full name"
         view.textColor = .black
+        view.delegate = self
         view.font = UIFont(name: "EuclidFlex-Bold", size: 16)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -151,13 +152,7 @@ class ProfileViewController: UIViewController {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named:"pen")
-        return view
-    }()
-    
-    lazy var penView2:UIImageView = {
-        let view = UIImageView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.image = UIImage(named:"pen")
+        view.isUserInteractionEnabled = true
         return view
     }()
     
@@ -165,32 +160,58 @@ class ProfileViewController: UIViewController {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named:"pen")
+        view.isUserInteractionEnabled = true
         return view
     }()
     
     lazy var penView4:UIImageView = {
         let view = UIImageView()
+        view.isUserInteractionEnabled = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named:"pen")
         return view
     }()
     let dataSource = CustomPickerDataSource()
     lazy var picker:UIPickerView = {
-        let view = UIPickerView()
+        let view = UIPickerView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300))
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = dataSource
         view.dataSource = dataSource
         view.backgroundColor = UIColor(red: 210/255, green: 214/255, blue: 219/255, alpha: 1)
         view.showsSelectionIndicator = true
+        view.isHidden = true
+//        view.isUserInteractionEnabled = true
+        return view
+    }()
+    
+    lazy var toolbar:UIToolbar = {
+        let view = UIToolbar()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.barStyle = UIBarStyle.default
+        view.isTranslucent = true
+        view.isHidden = true
+        view.sizeToFit()
+        view.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 250/255, alpha: 1)
         view.isUserInteractionEnabled = true
         return view
     }()
+    
+    var interactor:ProfileInteractor?
+    var router:ProfileRoute?
+    private var configurator = ProfileConfigurator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setupViews()
         navigationController?.setNavigationBarHidden(true, animated: false)
+        createFetchUserInfo()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        configurator.configureModule(viewController: self)
     }
     
     private func setupViews(){
@@ -269,9 +290,6 @@ class ProfileViewController: UIViewController {
         viewCertificate.addSubview(sickValue)
         sickValue.leftAnchor.constraint(equalTo: self.sickTitle.rightAnchor, constant: 8).isActive = true
         sickValue.topAnchor.constraint(equalTo: sickTitle.topAnchor, constant: 0).isActive = true
-        viewCertificate.addSubview(penView2)
-        penView2.leftAnchor.constraint(equalTo: sickValue.rightAnchor, constant: 4).isActive = true
-        penView2.topAnchor.constraint(equalTo: sickValue.topAnchor, constant: 0).isActive = true
             
             viewCertificate.addSubview(qrImage)
             qrImage.topAnchor.constraint(equalTo: self.sickTitle.bottomAnchor, constant: 16).isActive = true
@@ -297,33 +315,113 @@ class ProfileViewController: UIViewController {
         picker.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
         picker.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
         picker.sizeToFit()
-        let toolbar = UIToolbar()
         let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(pickerDone))
-        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let close = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(pickerClose))
-        toolbar.setItems([done,flex, close], animated: false)
-        toolbar.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 250/255, alpha: 1)
-        toolbar.isUserInteractionEnabled = true
-        toolbar.sizeToFit()
-        toolbar.translatesAutoresizingMaskIntoConstraints = false
-        picker.showsSelectionIndicator = true
-        picker.addSubview(toolbar)
+        toolbar.setItems([done], animated: true)
+        view.addSubview(toolbar)
         toolbar.leftAnchor.constraint(equalTo: self.picker.leftAnchor, constant: 0).isActive = true
         toolbar.rightAnchor.constraint(equalTo: self.picker.rightAnchor, constant: 0).isActive = true
         toolbar.topAnchor.constraint(equalTo: self.picker.topAnchor, constant: 0).isActive = true
+        toolbar.sizeToFit()
+        penView4.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openPickerAge)))
+        penView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openPickerCountry)))
+        penView3.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openPickerGender)))
+        self.view.layoutIfNeeded()
+        
+        picker.showsSelectionIndicator = true
+
         self.tabBarController?.tabBar.isHidden = false
             self.view.layoutIfNeeded()
     }
-    
 
 }
 
 extension ProfileViewController{
-    @objc func pickerDone(sender: UIBarButtonItem){
-        
+    private func showPicker(){
+        UIView.animate(withDuration: 0.3) {
+            self.toolbar.isHidden = false
+             self.picker.isHidden = false
+            self.view.layoutIfNeeded()
+        }
+    }
+}
+
+extension ProfileViewController{
+    
+    @objc func openPickerAge(){
+        interactor?.fetchPrickerAge(request: ProfileDataFlow.CreatePicker.Request())
     }
     
-    @objc func pickerClose(_ sender: Any){
-        view.endEditing(true)
+    @objc func openPickerCountry(){
+        interactor?.fetchPrickerCountry(request: ProfileDataFlow.CreatePicker.Request())
+    }
+    
+    @objc func openPickerGender(){
+        interactor?.fetchPrickerGender(request: ProfileDataFlow.CreatePicker.Request())
+    }
+    
+    
+    private func createFetchUserInfo(){
+        interactor?.fetchUserInfo(request: ProfileDataFlow.FetchUserInfo.Request())
+    }
+    
+     @objc func pickerDone(){
+        switch dataSource.data?.type {
+        case .age:
+            self.ageValue.text = dataSource.getDoneValue()
+        case .country:
+            self.countryValue.text = dataSource.getDoneValue()
+        case .gender:
+            self.genderValue.text = dataSource.getDoneValue()
+        case .none:
+            break
+        }
+        UIView.animate(withDuration: 0.3) {
+            self.toolbar.isHidden = true
+            self.picker.isHidden = true
+        }
+    }
+}
+
+
+extension ProfileViewController: ProfileViewProtocols{
+    func showUserInfo(viewModel: ProfileDataFlow.FetchUserInfo.ViewModel) {
+        switch viewModel.viewState {
+        case .result(id: let idUser, fullname: let nameUser, age: let ageUser, gender: let genderUser, country: let countryUser, status: let statusUser):
+            self.IDprofile.text = "ID: \(idUser)"
+            if !nameUser.isEmpty && nameUser.count > 1 {
+                self.fullName.text = nameUser
+            }
+            self.ageValue.text = ageUser
+            self.genderValue.text = genderUser
+            self.countryValue.text = countryUser
+            self.sickValue.text = statusUser
+        }
+    }
+    
+    func showPickerData(viewModel: ProfileDataFlow.CreatePicker.ViewModel) {
+        switch viewModel.viewState {
+        case .result(let data):
+            dataSource.data = data
+            picker.reloadAllComponents()
+            showPicker()
+        }
+    }
+    
+    
+}
+
+extension ProfileViewController: UITextFieldDelegate{
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentCharacterCount = textField.text?.count ?? 0
+        if range.length + range.location > currentCharacterCount {
+            return false
+        }
+        let newLength = currentCharacterCount + string.count - range.length
+        return newLength <= 25
     }
 }

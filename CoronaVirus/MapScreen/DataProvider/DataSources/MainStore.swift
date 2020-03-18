@@ -15,4 +15,5 @@ class MainStore {
     var userInfo:UserData?
     var country:Int?
     var countries:CountryInfo?
+    var sickStatus:String?
 }
