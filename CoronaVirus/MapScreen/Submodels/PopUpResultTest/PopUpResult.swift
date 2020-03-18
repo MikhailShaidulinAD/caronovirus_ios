@@ -150,6 +150,7 @@ class PopUpResult: UIView {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.text = "Pass the test again"
+        view.textColor = .black
         view.textAlignment = .center
         view.font = UIFont(name: "EuclidFlex-Regular", size: 16)
         let text = view.text

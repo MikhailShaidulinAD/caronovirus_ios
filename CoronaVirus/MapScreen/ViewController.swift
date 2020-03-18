@@ -57,7 +57,7 @@ class ViewController: UIViewController {
            view.text = "Test on existence of disease"
         view.textColor = .black
            view.textAlignment = .center
-           view.font = UIFont(name: "sourcesanspro_bold", size: 16)
+           view.font = UIFont(name: "EuclidFlex-Bold", size: 16)
            return view
        }()
     
@@ -426,7 +426,11 @@ extension ViewController: TestDataStoreProtocols{
     
     func scrollToNext(index:IndexPath) {
             collectionTest.isScrollEnabled = true
+        collectionTest.isUserInteractionEnabled = false
             collectionTest.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.collectionTest.isUserInteractionEnabled = true
+        }
     }
     
     

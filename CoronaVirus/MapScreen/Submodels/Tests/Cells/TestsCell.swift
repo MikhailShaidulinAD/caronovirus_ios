@@ -23,7 +23,7 @@ class TestsCell: UICollectionViewCell {
         view.textAlignment = .center
         view.numberOfLines = 0
         view.textColor = .black
-        view.font = UIFont(name: "sourcesanspro_bold", size: 18)
+        view.font = UIFont(name: "EuclidFlex-Regular", size: 18)
         return view
     }()
     
@@ -31,7 +31,7 @@ class TestsCell: UICollectionViewCell {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitle("YES", for: .normal)
-        view.titleLabel?.font = UIFont(name: "sourcesanspro_bold", size: 18)
+        view.titleLabel?.font = UIFont(name: "EuclidFlex-Bold", size: 18)
         view.titleLabel?.textColor = .white
         view.layer.cornerRadius = 5
         view.isUserInteractionEnabled = true
@@ -43,7 +43,7 @@ class TestsCell: UICollectionViewCell {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitle("NO", for: .normal)
-        view.titleLabel?.font = UIFont(name: "sourcesanspro_bold", size: 18)
+        view.titleLabel?.font = UIFont(name: "EuclidFlex-Bold", size: 18)
         view.titleLabel?.textColor = .white
         view.layer.cornerRadius = 5
         view.isUserInteractionEnabled = true

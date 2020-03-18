@@ -106,12 +106,14 @@ class ProfileViewController: UIViewController {
         }()
     let countryValue:UILabel = {
             let view = UILabel()
+        view.textColor = .black
         view.font = UIFont(name: "EuclidFlex-Bold", size: 16)
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
     let sickValue:UILabel = {
             let view = UILabel()
+        view.textColor = .black
         view.font = UIFont(name: "EuclidFlex-Bold", size: 16)
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
@@ -190,7 +192,7 @@ class ProfileViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = dataSource
         view.dataSource = dataSource
-        view.backgroundColor = UIColor(red: 210/255, green: 214/255, blue: 219/255, alpha: 1)
+        view.backgroundColor = .gray
         view.showsSelectionIndicator = true
         view.isHidden = true
 //        view.isUserInteractionEnabled = true
@@ -204,7 +206,7 @@ class ProfileViewController: UIViewController {
         view.isTranslucent = true
         view.isHidden = true
         view.sizeToFit()
-        view.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 250/255, alpha: 1)
+        view.backgroundColor = .lightGray
         view.isUserInteractionEnabled = true
         return view
     }()
