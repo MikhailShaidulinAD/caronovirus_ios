@@ -411,7 +411,7 @@ extension ProfileViewController{
             self.countryValue.text = dataSource.getDoneValue()
         case .gender:
             self.genderValue.text = dataSource.getDoneValue()
-            checkGenderIndefication(gender: dataSource.getDoneValue())
+            checkGenderIndefication(gender: genderValue.text)
         case .none:
             break
         }

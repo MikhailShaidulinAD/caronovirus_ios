@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         view.dataSource = data
         view.delegate = data
         view.register(TestsCell.self, forCellWithReuseIdentifier: TestsCell().id)
-        view.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        view.contentInset = UIEdgeInsets(top: 10, left: 16, bottom: 0, right: 16)
         return view
     }()
     

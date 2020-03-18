@@ -68,6 +68,26 @@ class FaqViewController: UIViewController {
            view.font = UIFont(name: "sourcesanspro_bold", size: 16)
            return view
        }()
+    
+    let titleAboutSix:UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.text = "Measures of precaution"
+        view.textColor = UIColor(red: 1, green: 0.647, blue: 0, alpha: 1)
+        view.textAlignment = .center
+        view.font = UIFont(name: "sourcesanspro_bold", size: 16)
+        return view
+    }()
+    
+    let titleAboutSeven:UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.text = "Symptoms of coronavirus"
+        view.textColor = UIColor(red: 1, green: 0.647, blue: 0, alpha: 1)
+        view.textAlignment = .center
+        view.font = UIFont(name: "sourcesanspro_bold", size: 16)
+        return view
+    }()
 
        
        let descriptionAboutTwo:UILabel = {
@@ -110,6 +130,28 @@ class FaqViewController: UIViewController {
            view.font = UIFont(name: "sourcesanspro_bold", size: 16)
            return view
        }()
+    
+    let descriptionAboutSix:UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.text = "\n\u{2022}Wash your hands with soap often during at least 20 seconds.\n\u{2022}Do not touch eyes, mouth and mucous membrane with dirty hands. \n\u{2022}Avoid a close contact with infected people.\n\u{2022}Use the wet sweeping with the disinfecting agents more frequently\n\u{2022}Specify the epidemiologic situation by planning the voyage.\n\u{2022}Use the masks to protect the organs of respiration\n\u{2022}Apply for the medical care in the dedicated organisations by the first symptoms of disease."
+        view.textColor = .black
+        view.textAlignment = .left
+        view.numberOfLines = 0
+        view.font = UIFont(name: "sourcesanspro_bold", size: 16)
+        return view
+    }()
+    
+    let descriptionAboutSeven:UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.text = "The incubative stage of coronavirus Covid-19 may last up to 2 weeks. The longer durations of an incubative stage might occur by transmission of the virus from animals.\n\nThe symptoms of coronavirus Covid-19 resemble the symptoms of pneumonia or a severe acute respiratory syndrome:\n\n\u{2022}Loss of consciousness\n\u{2022}Dry non-productive cough\n\u{2022}Fever and increased temperature\n\u{2022}Difficulties by breathing\n\u{2022}Pain in the chest area\n\u{2022}Headache\n\u{2022}Pain in muscles\n\u{2022}General sickness"
+        view.textColor = .black
+        view.textAlignment = .left
+        view.numberOfLines = 0
+        view.font = UIFont(name: "sourcesanspro_bold", size: 16)
+        return view
+    }()
        
        lazy var scrollView:UIScrollView = {
            let view = UIScrollView()
@@ -121,7 +163,9 @@ class FaqViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavBar()
+        self.view.backgroundColor = .white
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        setupViews()
     }
     
     private func setupViews(){
@@ -171,8 +215,24 @@ class FaqViewController: UIViewController {
                descriptionAboutFive.topAnchor.constraint(equalTo: self.titleAboutFive.bottomAnchor, constant: 16).isActive = true
                descriptionAboutFive.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor, constant: 16).isActive = true
                descriptionAboutFive.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor, constant: -16).isActive = true
+        self.scrollView.addSubview(titleAboutSix)
+        titleAboutSix.topAnchor.constraint(equalTo: self.descriptionAboutFive.bottomAnchor, constant: 16).isActive = true
+        titleAboutSix.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor, constant: 16).isActive = true
+        titleAboutSix.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor, constant: -16).isActive = true
+        self.scrollView.addSubview(descriptionAboutSix)
+        descriptionAboutSix.topAnchor.constraint(equalTo: self.titleAboutSix.bottomAnchor, constant: 16).isActive = true
+        descriptionAboutSix.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor, constant: 16).isActive = true
+        descriptionAboutSix.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor, constant: -16).isActive = true
+        self.scrollView.addSubview(titleAboutSeven)
+        titleAboutSeven.topAnchor.constraint(equalTo: self.descriptionAboutSix.bottomAnchor, constant: 16).isActive = true
+        titleAboutSeven.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor, constant: 16).isActive = true
+        titleAboutSeven.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor, constant: -16).isActive = true
+        self.scrollView.addSubview(descriptionAboutSeven)
+        descriptionAboutSeven.topAnchor.constraint(equalTo: self.titleAboutSeven.bottomAnchor, constant: 16).isActive = true
+        descriptionAboutSeven.leftAnchor.constraint(equalTo: self.scrollView.leftAnchor, constant: 16).isActive = true
+        descriptionAboutSeven.rightAnchor.constraint(equalTo: self.scrollView.rightAnchor, constant: -16).isActive = true
                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                   self.scrollView.contentSize.height = self.descriptionAboutFive.frame.maxY
+                   self.scrollView.contentSize.height = self.descriptionAboutSeven.frame.maxY
                    self.view.layoutIfNeeded()
                }
     }
