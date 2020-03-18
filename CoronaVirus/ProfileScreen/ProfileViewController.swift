@@ -476,9 +476,9 @@ extension ProfileViewController: ProfileViewProtocols{
     func showPickerData(viewModel: ProfileDataFlow.CreatePicker.ViewModel) {
         switch viewModel.viewState {
         case .result(let data):
+            picker.selectRow(0, inComponent: 0, animated: false)
             self.view.endEditing(true)
             dataSource.data = data
-            picker.selectRow(0, inComponent: 0, animated: false)
             picker.reloadAllComponents()
             showPicker()
         }
