@@ -1,0 +1,13 @@
+//
+//  NewsCell.swift
+//  CoronaVirus
+//
+//  Created by ShaydulinsIOS on 18.03.2020.
+//  Copyright © 2020 ShaydulinsIOS. All rights reserved.
+//
+
+import UIKit
+
+class NewsCell: UICollectionViewCell {
+    let id = "NewsCell"
+}
