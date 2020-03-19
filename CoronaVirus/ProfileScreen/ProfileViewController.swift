@@ -40,6 +40,7 @@ class ProfileViewController: UIViewController {
     lazy var firstName:UITextField = {
         let view = UITextField()
         view.placeholder = "First Name"
+        view.attributedPlaceholder = NSAttributedString(string: "First Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
         view.textColor = .black
         view.delegate = self
         view.font = UIFont(name: "EuclidFlex-Bold", size: 16)
@@ -50,6 +51,7 @@ class ProfileViewController: UIViewController {
     lazy var lastName:UITextField = {
         let view = UITextField()
         view.placeholder = "Last Name"
+        view.attributedPlaceholder = NSAttributedString(string: "Last Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
         view.textColor = .black
         view.delegate = self
         view.font = UIFont(name: "EuclidFlex-Bold", size: 16)

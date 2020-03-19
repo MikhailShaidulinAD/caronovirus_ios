@@ -265,6 +265,7 @@ extension ViewController{
         popUpResult.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
         popUpResult.alpha = 0
         popUpResult.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closePopUp)))
+        popUpResult.sizeToFit()
         
         self.view.addSubview(loader)
         loader.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
